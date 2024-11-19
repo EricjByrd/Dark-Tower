@@ -52,6 +52,7 @@ class Main : JPanel(MigLayout("ins 4, fill")) {
         }
 
 
+
     }
 
     companion object {
@@ -81,4 +82,6 @@ class Main : JPanel(MigLayout("ins 4, fill")) {
         }
     }
 }
+
+
 
