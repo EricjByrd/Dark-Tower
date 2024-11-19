@@ -34,23 +34,28 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
             add(backwards, "skip 1")
             add(rightTurn, "sg 1, wrap")
             forward.addActionListener {
-                if(playerPosition.d == 'N'){
-                    playerPosition.y++
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'S'){
-                    playerPosition.y--
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'E'){
-                    playerPosition.x++
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'W'){
-                    playerPosition.x--
-                    playerPosition.printPlayerCoords()
-                }
+                when (playerPosition.d) {
+                    'N' -> {
+                        playerPosition.y++
+                        playerPosition.printPlayerCoords()
+                    }
 
+                    'S' -> {
+                        playerPosition.y--
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    'E' -> {
+                        playerPosition.x++
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    'W' -> {
+                        playerPosition.x--
+                        playerPosition.printPlayerCoords()
+                    }
+
+                }
             }
             backwards.addActionListener {
                 if(playerPosition.d == 'N'){
@@ -72,40 +77,28 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
 
             }
             leftTurn.addActionListener {
-                if(playerPosition.d == 'N'){
-                    playerPosition.d = 'W'
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'S'){
-                    playerPosition.d = 'E'
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'E'){
-                    playerPosition.d = 'N'
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'W'){
-                    playerPosition.d = 'S'
-                    playerPosition.printPlayerCoords()
+                when(playerPosition.d){
+                    'N' -> {playerPosition.d = 'W'
+                    playerPosition.printPlayerCoords()}
+                    'S' -> {playerPosition.d ='E'
+                    playerPosition.printPlayerCoords()}
+                    'E' -> {playerPosition.d = 'N'
+                        playerPosition.printPlayerCoords()}
+                    'W' -> {playerPosition.d = 'S'
+                        playerPosition.printPlayerCoords()}
                 }
 
             }
             rightTurn.addActionListener {
-                if(playerPosition.d == 'N'){
-                    playerPosition.d = 'E'
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'S'){
-                    playerPosition.d = 'W'
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'E'){
-                    playerPosition.d = 'S'
-                    playerPosition.printPlayerCoords()
-                }
-                if(playerPosition.d == 'W'){
-                    playerPosition.d = 'N'
-                    playerPosition.printPlayerCoords()
+                when(playerPosition.d){
+                    'N' -> {playerPosition.d = 'E'
+                        playerPosition.printPlayerCoords()}
+                    'S' -> {playerPosition.d ='W'
+                        playerPosition.printPlayerCoords()}
+                    'E' -> {playerPosition.d = 'S'
+                        playerPosition.printPlayerCoords()}
+                    'W' -> {playerPosition.d = 'N'
+                        playerPosition.printPlayerCoords()}
                 }
 
             }
