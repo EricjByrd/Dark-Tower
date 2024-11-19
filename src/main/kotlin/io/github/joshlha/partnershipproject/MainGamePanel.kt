@@ -35,22 +35,22 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
             add(rightTurn, "sg 1, wrap")
             forward.addActionListener {
                 when (playerPosition.d) {
-                    'N' -> {
+                    playerPosition.Direction.N -> {
                         playerPosition.y++
                         playerPosition.printPlayerCoords()
                     }
 
-                    'S' -> {
+                    playerPosition.Direction.S -> {
                         playerPosition.y--
                         playerPosition.printPlayerCoords()
                     }
 
-                    'E' -> {
+                    playerPosition.Direction.E -> {
                         playerPosition.x++
                         playerPosition.printPlayerCoords()
                     }
 
-                    'W' -> {
+                    playerPosition.Direction.W -> {
                         playerPosition.x--
                         playerPosition.printPlayerCoords()
                     }
@@ -58,19 +58,19 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
                 }
             }
             backwards.addActionListener {
-                if(playerPosition.d == 'N'){
+                if(playerPosition.d == playerPosition.Direction.N){
                     playerPosition.y--
                     playerPosition.printPlayerCoords()
                 }
-                if(playerPosition.d == 'S'){
+                if(playerPosition.d == playerPosition.Direction.S){
                     playerPosition.y++
                     playerPosition.printPlayerCoords()
                 }
-                if(playerPosition.d == 'E'){
+                if(playerPosition.d == playerPosition.Direction.E){
                     playerPosition.x--
                     playerPosition.printPlayerCoords()
                 }
-                if(playerPosition.d == 'W'){
+                if(playerPosition.d == playerPosition.Direction.W){
                     playerPosition.x++
                     playerPosition.printPlayerCoords()
                 }
@@ -78,26 +78,26 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
             }
             leftTurn.addActionListener {
                 when(playerPosition.d){
-                    'N' -> {playerPosition.d = 'W'
+                    playerPosition.Direction.N -> {playerPosition.d = playerPosition.Direction.W
                     playerPosition.printPlayerCoords()}
-                    'S' -> {playerPosition.d ='E'
+                    playerPosition.Direction.S -> {playerPosition.d =playerPosition.Direction.E
                     playerPosition.printPlayerCoords()}
-                    'E' -> {playerPosition.d = 'N'
+                    playerPosition.Direction.E -> {playerPosition.d = playerPosition.Direction.N
                         playerPosition.printPlayerCoords()}
-                    'W' -> {playerPosition.d = 'S'
+                    playerPosition.Direction.W -> {playerPosition.d = playerPosition.Direction.S
                         playerPosition.printPlayerCoords()}
                 }
 
             }
             rightTurn.addActionListener {
                 when(playerPosition.d){
-                    'N' -> {playerPosition.d = 'E'
+                    playerPosition.Direction.N -> {playerPosition.d = playerPosition.Direction.E
                         playerPosition.printPlayerCoords()}
-                    'S' -> {playerPosition.d ='W'
+                    playerPosition.Direction.S -> {playerPosition.d =playerPosition.Direction.W
                         playerPosition.printPlayerCoords()}
-                    'E' -> {playerPosition.d = 'S'
+                    playerPosition.Direction.E -> {playerPosition.d = playerPosition.Direction.S
                         playerPosition.printPlayerCoords()}
-                    'W' -> {playerPosition.d = 'N'
+                    playerPosition.Direction.W -> {playerPosition.d = playerPosition.Direction.N
                         playerPosition.printPlayerCoords()}
                 }
 

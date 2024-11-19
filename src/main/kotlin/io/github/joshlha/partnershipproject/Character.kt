@@ -69,11 +69,6 @@ class playerCharacter(override val name: String, override val health: Int, val a
 val goblin = Monster("Goblin A", 20, 40, 40, 10, 10)
 val Asteroth = Boss("Asteroth", 400, 100, 55, 20, 20)
 val Eric = playerCharacter("Eric", 100, 100, 100, 100, 100)
-fun main(){
-    goblin.greet()
-    Asteroth.greet()
-
-}
 
 interface normCombatant{
     fun attack()
