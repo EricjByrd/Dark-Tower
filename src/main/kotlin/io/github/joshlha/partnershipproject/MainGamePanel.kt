@@ -9,7 +9,7 @@ import javax.swing.*
 import javax.swing.text.html.HTML.Attribute.N
 import javax.swing.text.html.HTML.Tag.S
 
-class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]"))) {
+class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
     val worldview = WorldViewPanel()
     val buttons = ButtonPanel()
     //val allButtons = listOf(upButton, leftButton, rightButton, downButton)
@@ -18,10 +18,10 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
         // Step 2; Add all the components to the layout
         init {
             isOpaque = false
-            val forward = ButtonPanel().upButton
-            val backwards = ButtonPanel().downButton
-            val leftTurn = ButtonPanel().leftButton
-            val rightTurn = ButtonPanel().rightButton
+            val forward = buttons.upButton
+            val backwards = buttons.downButton
+            val leftTurn = buttons.leftButton
+            val rightTurn = buttons.rightButton
             val textPanel = JLabel(playerPosition.coordinates)
 
             add(worldview, "span, grow, wrap")
@@ -29,10 +29,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][][]")))
             //add(upButton, "flowx")
             //add(leftButton,"flowx")
            // add(rightButton, "flowx")
-            add(forward, "skip 1, center, wrap")
-            add(leftTurn, " skip 1, sg 1")
-            add(backwards, "skip 1")
-            add(rightTurn, "sg 1, wrap")
+            add(buttons)
             forward.addActionListener {
                 when (playerPosition.d) {
                     playerPosition.Direction.N -> {
