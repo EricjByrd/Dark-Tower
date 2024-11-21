@@ -4,14 +4,17 @@ import io.github.joshlha.partnershipproject.Main.Companion.backgroundImage
 import net.miginfocom.swing.MigLayout
 import java.awt.*
 import java.awt.SystemColor.text
+import java.io.File
 import javax.imageio.ImageIO
+import javax.imageio.ImageReader
 import javax.swing.*
 import javax.swing.text.html.HTML.Attribute.N
 import javax.swing.text.html.HTML.Tag.S
 
 class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
-    val worldview = WorldViewPanel()
+    val worldview = WorldViewLabel()
     val buttons = ButtonPanel()
+
     //val allButtons = listOf(upButton, leftButton, rightButton, downButton)
 
 
@@ -23,9 +26,11 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             val leftTurn = buttons.leftButton
             val rightTurn = buttons.rightButton
             val textPanel = JLabel(playerPosition.coordinates)
+            val icon = ImageIcon("src/main/resources/yes.gif")
 
-            add(worldview, "span, grow, wrap")
-            add(textPanel)
+
+            //worldview.setText("hello")
+            add(worldview, "span 3")//span, grow, wrap")
             //add(upButton, "flowx")
             //add(leftButton,"flowx")
            // add(rightButton, "flowx")
@@ -35,11 +40,17 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
                     playerPosition.Direction.N -> {
                         playerPosition.y++
                         playerPosition.printPlayerCoords()
-                    }
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/${playerPosition.usableCoordinates}.png"))
+                        println("src/main/resources/maps/F1/${playerPosition.usableCoordinates}.png")
+                            }
+
+
 
                     playerPosition.Direction.S -> {
+                        if(playerPosition.y == 0){println("cannot continue")}
+                        else{
                         playerPosition.y--
-                        playerPosition.printPlayerCoords()
+                        playerPosition.printPlayerCoords()}
                     }
 
                     playerPosition.Direction.E -> {
@@ -48,8 +59,9 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
                     }
 
                     playerPosition.Direction.W -> {
-                        playerPosition.x--
-                        playerPosition.printPlayerCoords()
+                        if(playerPosition.x == 0){println("cannot continue")}
+                        else {playerPosition.x--
+                        playerPosition.printPlayerCoords()}
                     }
 
                 }
