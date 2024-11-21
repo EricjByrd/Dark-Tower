@@ -17,12 +17,12 @@ object playerPosition {
         N,S,E,W
     }
     var f: Int = 1
-    val coordinates= "X:${x},Y:${y},D:${d}"
+    val coordinates= "X:${x},Y:${y},D:${d}F${f}"
     fun printPlayerCoords(){
-        println("X:${x},Y:${y},D:${d}")
+        println("X:${x},Y:${y},D:${d}${f}")
     }
     fun returnUsableCoords(): String{
-        val usableCoordinates= "X${x}Y${y}D${d}.png"
+        val usableCoordinates= "X${x}Y${y}D${d}F${f}.png"
         return usableCoordinates
     }
 }

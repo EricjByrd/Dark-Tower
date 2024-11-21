@@ -29,12 +29,17 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             val leftTurn = buttons.leftButton
             val rightTurn = buttons.rightButton
             val textPanel = JLabel(playerPosition.coordinates)
+            val x = playerPosition.x
+            val y = playerPosition.y
+            val d = playerPosition.d
+            val f = playerPosition.f
 
             add(worldview, "span 3")//span, grow, wrap")
             //add(upButton, "flowx")
             //add(leftButton,"flowx")
            // add(rightButton, "flowx")
             add(buttons)
+            worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
             forward.addActionListener {
                 when (playerPosition.d) {
                     playerPosition.Direction.N -> {
@@ -52,17 +57,20 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
                         if(playerPosition.y == 0){println("cannot continue")}
                         else{
                         playerPosition.y--
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                     }
 
                     playerPosition.Direction.E -> {
                         playerPosition.x++
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()
                     }
 
                     playerPosition.Direction.W -> {
                         if(playerPosition.x == 0){println("cannot continue")}
                         else {playerPosition.x--
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                     }
 
@@ -71,18 +79,22 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             backwards.addActionListener {
                 if(playerPosition.d == playerPosition.Direction.N){
                     playerPosition.y--
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
                 if(playerPosition.d == playerPosition.Direction.S){
                     playerPosition.y++
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
                 if(playerPosition.d == playerPosition.Direction.E){
                     playerPosition.x--
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
                 if(playerPosition.d == playerPosition.Direction.W){
                     playerPosition.x++
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
 
@@ -90,12 +102,16 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             leftTurn.addActionListener {
                 when(playerPosition.d){
                     playerPosition.Direction.N -> {playerPosition.d = playerPosition.Direction.W
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()}
                     playerPosition.Direction.S -> {playerPosition.d =playerPosition.Direction.E
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()}
                     playerPosition.Direction.E -> {playerPosition.d = playerPosition.Direction.N
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                     playerPosition.Direction.W -> {playerPosition.d = playerPosition.Direction.S
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                 }
 
@@ -103,12 +119,16 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             rightTurn.addActionListener {
                 when(playerPosition.d){
                     playerPosition.Direction.N -> {playerPosition.d = playerPosition.Direction.E
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                     playerPosition.Direction.S -> {playerPosition.d =playerPosition.Direction.W
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                     playerPosition.Direction.E -> {playerPosition.d = playerPosition.Direction.S
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                     playerPosition.Direction.W -> {playerPosition.d = playerPosition.Direction.N
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()}
                 }
 
