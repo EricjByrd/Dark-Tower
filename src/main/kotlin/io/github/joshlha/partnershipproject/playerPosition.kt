@@ -18,8 +18,11 @@ object playerPosition {
     }
     var f: Int = 1
     val coordinates= "X:${x},Y:${y},D:${d}"
-    val usableCoordinates ="X${x}Y${y}D${d}F${f}"
     fun printPlayerCoords(){
         println("X:${x},Y:${y},D:${d}")
+    }
+    fun returnUsableCoords(): String{
+        val usableCoordinates= "X${x}Y${y}D${d}.png"
+        return usableCoordinates
     }
 }

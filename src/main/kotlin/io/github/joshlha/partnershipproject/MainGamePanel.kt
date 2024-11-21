@@ -1,8 +1,10 @@
 package io.github.joshlha.partnershipproject
 
 import io.github.joshlha.partnershipproject.Main.Companion.backgroundImage
+import io.github.joshlha.partnershipproject.playerPosition.d
 import net.miginfocom.swing.MigLayout
 import java.awt.*
+import java.awt.Event.F1
 import java.awt.SystemColor.text
 import java.io.File
 import javax.imageio.ImageIO
@@ -14,6 +16,7 @@ import javax.swing.text.html.HTML.Tag.S
 class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
     val worldview = WorldViewLabel()
     val buttons = ButtonPanel()
+    var nextLocation = playerPosition.returnUsableCoords()
 
     //val allButtons = listOf(upButton, leftButton, rightButton, downButton)
 
@@ -26,10 +29,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             val leftTurn = buttons.leftButton
             val rightTurn = buttons.rightButton
             val textPanel = JLabel(playerPosition.coordinates)
-            val icon = ImageIcon("src/main/resources/yes.gif")
 
-
-            //worldview.setText("hello")
             add(worldview, "span 3")//span, grow, wrap")
             //add(upButton, "flowx")
             //add(leftButton,"flowx")
@@ -40,8 +40,10 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
                     playerPosition.Direction.N -> {
                         playerPosition.y++
                         playerPosition.printPlayerCoords()
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/${playerPosition.usableCoordinates}.png"))
-                        println("src/main/resources/maps/F1/${playerPosition.usableCoordinates}.png")
+                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                        println("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png")
+                        worldview.revalidate()
+                        worldview.repaint()
                             }
 
 
