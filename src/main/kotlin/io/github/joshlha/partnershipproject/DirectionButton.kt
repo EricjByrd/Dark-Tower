@@ -19,9 +19,10 @@ class ButtonPanel: JPanel(MigLayout("flowx")){
     val leftButton = ButtonPanel.DirectionButton("←")
     val rightButton = ButtonPanel.DirectionButton("→")
     init{
-        add(upButton)
-        add(downButton)
-        add(leftButton)
-        add(rightButton)
+
+        add(upButton,"dock north, wrap")
+        add(leftButton,"dock west")
+        add(rightButton, "dock east")
+        add(downButton, "dock south")
     }
 }

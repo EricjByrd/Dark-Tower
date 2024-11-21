@@ -13,10 +13,10 @@ import javax.swing.*
 import javax.swing.text.html.HTML.Attribute.N
 import javax.swing.text.html.HTML.Tag.S
 
-class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
+class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][]"))) {
     val worldview = WorldViewLabel()
     val buttons = ButtonPanel()
-    var nextLocation = playerPosition.returnUsableCoords()
+
 
     //val allButtons = listOf(upButton, leftButton, rightButton, downButton)
 
@@ -29,20 +29,20 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][][]"))) {
             val leftTurn = buttons.leftButton
             val rightTurn = buttons.rightButton
             val textPanel = JLabel(playerPosition.coordinates)
-            val x = playerPosition.x
-            val y = playerPosition.y
-            val d = playerPosition.d
-            val f = playerPosition.f
 
-            add(worldview, "span 3")//span, grow, wrap")
+
+            add(worldview, "span 1")//span, grow, wrap")
             //add(upButton, "flowx")
             //add(leftButton,"flowx")
            // add(rightButton, "flowx")
             add(buttons)
-            worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+            val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+            //why won't path work in my ActionListener?
+            worldview.setIcon(ImageIcon(path))
             forward.addActionListener {
                 when (playerPosition.d) {
                     playerPosition.Direction.N -> {
+
                         playerPosition.y++
                         playerPosition.printPlayerCoords()
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
