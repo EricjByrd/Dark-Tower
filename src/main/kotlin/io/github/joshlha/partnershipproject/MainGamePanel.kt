@@ -13,7 +13,7 @@ import javax.swing.*
 import javax.swing.text.html.HTML.Attribute.N
 import javax.swing.text.html.HTML.Tag.S
 
-class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][]"))) {
+class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[]10[]10[]"))) {
     val worldview = WorldViewLabel()
     val buttons = ButtonPanel()
 
@@ -21,120 +21,150 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][]"))) {
     //val allButtons = listOf(upButton, leftButton, rightButton, downButton)
 
 
-        // Step 2; Add all the components to the layout
-        init {
-            isOpaque = false
-            val forward = buttons.upButton
-            val backwards = buttons.downButton
-            val leftTurn = buttons.leftButton
-            val rightTurn = buttons.rightButton
-            val textPanel = JLabel(playerPosition.coordinates)
+    // Step 2; Add all the components to the layout
+    init {
+        isOpaque = false
+        val forward = buttons.upButton
+        val backwards = buttons.downButton
+        val leftTurn = buttons.leftButton
+        val rightTurn = buttons.rightButton
+
+        add(worldview, "span 1")//span, grow, wrap")
+        //add(upButton, "flowx")
+        //add(leftButton,"flowx")
+        // add(rightButton, "flowx")
+        add(buttons)
+        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+        //why won't path work in my ActionListener?
+        worldview.setIcon(ImageIcon(path))
+        forward.addActionListener {
+            when (playerPosition.d) {
+                playerPosition.Direction.N -> {
+
+                    playerPosition.y++
+                    playerPosition.printPlayerCoords()
+                    worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                    println(path)
+                    println("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png")
+                }
 
 
-            add(worldview, "span 1")//span, grow, wrap")
-            //add(upButton, "flowx")
-            //add(leftButton,"flowx")
-           // add(rightButton, "flowx")
-            add(buttons)
-            val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
-            //why won't path work in my ActionListener?
-            worldview.setIcon(ImageIcon(path))
-            forward.addActionListener {
-                when (playerPosition.d) {
-                    playerPosition.Direction.N -> {
-
-                        playerPosition.y++
-                        playerPosition.printPlayerCoords()
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        println("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png")
-                        worldview.revalidate()
-                        worldview.repaint()
-                            }
-
-
-
-                    playerPosition.Direction.S -> {
-                        if(playerPosition.y == 0){println("cannot continue")}
-                        else{
+                playerPosition.Direction.S -> {
+                    if (playerPosition.y == 0) {
+                        println("cannot continue")
+                    } else {
                         playerPosition.y--
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
+                        playerPosition.printPlayerCoords()
                     }
+                }
 
-                    playerPosition.Direction.E -> {
-                        playerPosition.x++
+                playerPosition.Direction.E -> {
+                    playerPosition.x++
+                    worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                    playerPosition.printPlayerCoords()
+                }
+
+                playerPosition.Direction.W -> {
+                    if (playerPosition.x == 0) {
+                        println("cannot continue")
+                    } else {
+                        playerPosition.x--
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                         playerPosition.printPlayerCoords()
                     }
-
-                    playerPosition.Direction.W -> {
-                        if(playerPosition.x == 0){println("cannot continue")}
-                        else {playerPosition.x--
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
-                    }
-
                 }
+
             }
-            backwards.addActionListener {
-                if(playerPosition.d == playerPosition.Direction.N){
+        }
+        backwards.addActionListener {
+            when (playerPosition.d) {
+                playerPosition.Direction.N -> {
                     playerPosition.y--
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                    worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
-                if(playerPosition.d == playerPosition.Direction.S){
+
+                playerPosition.Direction.S -> {
                     playerPosition.y++
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                    worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
-                if(playerPosition.d == playerPosition.Direction.E){
+
+                playerPosition.Direction.E -> {
                     playerPosition.x--
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                    worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
-                if(playerPosition.d == playerPosition.Direction.W){
+
+                playerPosition.Direction.W -> {
                     playerPosition.x++
-                        worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
+                    worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
                     playerPosition.printPlayerCoords()
                 }
 
             }
             leftTurn.addActionListener {
-                when(playerPosition.d){
-                    playerPosition.Direction.N -> {playerPosition.d = playerPosition.Direction.W
+                when (playerPosition.d) {
+                    playerPosition.Direction.N -> {
+                        playerPosition.d = playerPosition.Direction.W
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                    playerPosition.printPlayerCoords()}
-                    playerPosition.Direction.S -> {playerPosition.d =playerPosition.Direction.E
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    playerPosition.Direction.S -> {
+                        playerPosition.d = playerPosition.Direction.E
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                    playerPosition.printPlayerCoords()}
-                    playerPosition.Direction.E -> {playerPosition.d = playerPosition.Direction.N
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    playerPosition.Direction.E -> {
+                        playerPosition.d = playerPosition.Direction.N
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
-                    playerPosition.Direction.W -> {playerPosition.d = playerPosition.Direction.S
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    playerPosition.Direction.W -> {
+                        playerPosition.d = playerPosition.Direction.S
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
+                        playerPosition.printPlayerCoords()
+                    }
                 }
 
             }
             rightTurn.addActionListener {
-                when(playerPosition.d){
-                    playerPosition.Direction.N -> {playerPosition.d = playerPosition.Direction.E
+                when (playerPosition.d) {
+                    playerPosition.Direction.N -> {
+                        playerPosition.d = playerPosition.Direction.E
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
-                    playerPosition.Direction.S -> {playerPosition.d =playerPosition.Direction.W
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    playerPosition.Direction.S -> {
+                        playerPosition.d = playerPosition.Direction.W
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
-                    playerPosition.Direction.E -> {playerPosition.d = playerPosition.Direction.S
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    playerPosition.Direction.E -> {
+                        playerPosition.d = playerPosition.Direction.S
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
-                    playerPosition.Direction.W -> {playerPosition.d = playerPosition.Direction.N
+                        playerPosition.printPlayerCoords()
+                    }
+
+                    playerPosition.Direction.W -> {
+                        playerPosition.d = playerPosition.Direction.N
                         worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
-                        playerPosition.printPlayerCoords()}
+                        playerPosition.printPlayerCoords()
+                    }
                 }
 
             }
-
         }
+    }
+}
+
+
 
 
 //        exitButton.addActionListener(
@@ -146,6 +176,6 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[][]"))) {
 //            }
 //        )
             //Simplified version of the code above
-        }
+
 
         // Step 3: Set up event listeners for your components

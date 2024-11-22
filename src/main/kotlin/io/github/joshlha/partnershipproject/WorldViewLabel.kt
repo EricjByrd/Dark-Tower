@@ -7,7 +7,9 @@ class WorldViewLabel() : JLabel() {
     //what we see
     }
 
+
 fun setWorldView(Label :JLabel, sight: ImageIcon){
+
 
 }
 
