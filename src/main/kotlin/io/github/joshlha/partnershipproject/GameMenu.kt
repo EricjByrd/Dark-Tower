@@ -12,12 +12,13 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
     val newGameButton = GameMenuButton("New Game", "Start a new game!")
     val loadButton = GameMenuButton("Load Game", "Load your game.")
     val optionsButton = GameMenuButton("Options", "Change settings")
+    val dungeonEditor = GameMenuButton("Dungeon Editor", "Create your own Dungeon")
     val exitButton = GameMenuButton("Exit", "Exit Game")
     val screenRes = Toolkit.getDefaultToolkit().screenSize
     val fullscrnWidth = screenRes.getWidth()
     val fullscrnHeight = screenRes.getHeight()
 
-    val allButtons = listOf(newGameButton, loadButton, optionsButton, exitButton)
+    val allButtons = listOf(newGameButton, loadButton, dungeonEditor ,optionsButton, exitButton)
 
     // Step 2; Add all the components to the layout
     init {
@@ -45,7 +46,16 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
             }
         }
         loadButton.addActionListener {
-            JFrame("Editor").apply {
+            JFrame("Load Game").apply {
+                contentPane = JPanel()
+                setSize(600, 400)
+                setLocationRelativeTo(null)
+                isVisible = true
+                defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
+            }
+        }
+        dungeonEditor.addActionListener{
+            JFrame("Dungeon Editor").apply {
                 contentPane = DungeonEditor()
                 setSize(600, 400)
                 setLocationRelativeTo(null)

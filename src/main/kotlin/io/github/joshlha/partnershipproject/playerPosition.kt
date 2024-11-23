@@ -5,9 +5,21 @@ import io.github.joshlha.partnershipproject.playerPosition.d
 import io.github.joshlha.partnershipproject.playerPosition.f
 import io.github.joshlha.partnershipproject.playerPosition.x
 import io.github.joshlha.partnershipproject.playerPosition.y
+import java.io.File
 import jdk.internal.org.jline.utils.Colors.h
 import jdk.internal.org.jline.utils.Colors.s
 import javax.swing.text.html.HTML.Attribute.N
+
+fun CheckBounds(path: String): Boolean {
+    val item = File(path)
+    val result = if (!item.exists()){
+        return true
+    }
+    else{
+        return false
+    }
+    return result
+}
 
 object playerPosition {
     //this can serve as coordinates AND locations for the map.
@@ -31,23 +43,15 @@ object playerPosition {
 
 }
 
-
-object floorRepository{
-    val X0Y0F1 = arrayListOf("src/main/resources/maps/F1/X0Y0DNF1.png",
-        "src/main/resources/maps/F1/X0Y0DSF1.png",
-        "src/main/resources/maps/F1/X0Y0DEF1.png",
-        "src/main/resources/maps/F1/X0Y0DWF1.png")
-    val X0Y1F1 = arrayListOf("src/main/resources/maps/F1/X${x}Y${y}D${d}F${f}.png")
-}
 //function to potentially add images to coordinates.
-fun addViews(list :ArrayList<String>, x: Int, y: Int, f: Int){
-    val north: String = "src/main/resources/maps/F1/X${x}Y${y}DNF${f}.png"
-    val south: String = "src/main/resources/maps/F1/X${x}Y${y}DSF${f}.png"
-    val east: String = "src/main/resources/maps/F1/X${x}Y${y}DEF${f}.png"
-    val west: String = "src/main/resources/maps/F1/X${x}Y${y}DWF${f}.png"
-    list.add(north)
-    list.add(south)
-    list.add(east)
-    list.add(west)
-}
+    fun addViews(list: ArrayList<String>, x: Int, y: Int, f: Int) {
+        val north: String = "src/main/resources/maps/F1/X${x}Y${y}DNF${f}.png"
+        val south: String = "src/main/resources/maps/F1/X${x}Y${y}DSF${f}.png"
+        val east: String = "src/main/resources/maps/F1/X${x}Y${y}DEF${f}.png"
+        val west: String = "src/main/resources/maps/F1/X${x}Y${y}DWF${f}.png"
+        list.add(north)
+        list.add(south)
+        list.add(east)
+        list.add(west)
+    }
 

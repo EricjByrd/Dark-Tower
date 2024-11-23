@@ -37,10 +37,10 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[]10[]10[]")
         val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
         //why won't path work in my ActionListener?
         worldview.setIcon(ImageIcon(path))
+
         forward.addActionListener {
             when (playerPosition.d) {
                 playerPosition.Direction.N -> {
-
                     playerPosition.y++
                     playerPosition.printPlayerCoords()
                     worldview.setIcon(ImageIcon("src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"))
@@ -77,6 +77,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[]10[]10[]")
 
             }
         }
+
         backwards.addActionListener {
             when (playerPosition.d) {
                 playerPosition.Direction.N -> {
@@ -104,7 +105,8 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[]10[]10[]")
                 }
 
             }
-            leftTurn.addActionListener {
+        }
+        leftTurn.addActionListener {
                 when (playerPosition.d) {
                     playerPosition.Direction.N -> {
                         playerPosition.d = playerPosition.Direction.W
@@ -162,7 +164,6 @@ class MainGamePanel() : JPanel((MigLayout("debug, fill", "[]10[]", "[]10[]10[]")
             }
         }
     }
-}
 
 
 
