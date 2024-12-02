@@ -5,7 +5,7 @@ import java.awt.Font
 import javax.swing.JButton
 import javax.swing.JPanel
 
-class ButtonPanel: JPanel(MigLayout("flowx")){
+class ButtonPanel: JPanel(MigLayout()){
 
     class DirectionButton(
         text: String
@@ -22,7 +22,7 @@ class ButtonPanel: JPanel(MigLayout("flowx")){
 
         add(upButton,"dock north, wrap")
         add(leftButton,"dock west")
-        add(rightButton, "dock east")
+        add(rightButton, "dock east, wrap")
         add(downButton, "dock south")
     }
 }

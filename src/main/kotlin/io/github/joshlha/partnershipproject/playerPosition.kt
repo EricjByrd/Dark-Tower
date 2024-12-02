@@ -40,6 +40,9 @@ object playerPosition {
     fun printPlayerCoords(){
         println("X:${x},Y:${y},D:${d}${f}")
     }
+    fun getPlayerCoords(): String{
+        return "X:${x},Y:${y},D:${d}${f}"
+    }
 
 }
 
