@@ -1,10 +1,10 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
 import com.jidesoft.swing.Sticky
-import io.github.joshlha.partnershipproject.playerPosition.d
-import io.github.joshlha.partnershipproject.playerPosition.f
-import io.github.joshlha.partnershipproject.playerPosition.x
-import io.github.joshlha.partnershipproject.playerPosition.y
+import io.github.ericjbyrd.partnershipproject.playerPosition.d
+import io.github.ericjbyrd.partnershipproject.playerPosition.f
+import io.github.ericjbyrd.partnershipproject.playerPosition.x
+import io.github.ericjbyrd.partnershipproject.playerPosition.y
 import java.io.File
 import jdk.internal.org.jline.utils.Colors.h
 import jdk.internal.org.jline.utils.Colors.s

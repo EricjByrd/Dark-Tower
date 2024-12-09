@@ -1,9 +1,9 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
-import io.github.joshlha.partnershipproject.Main.Companion.backgroundImage
-import io.github.joshlha.partnershipproject.playerPosition.d
-import io.github.joshlha.partnershipproject.playerPosition.getPlayerCoords
-import io.github.joshlha.partnershipproject.playerPosition.printPlayerCoords
+import io.github.ericjbyrd.partnershipproject.Main.Companion.backgroundImage
+import io.github.ericjbyrd.partnershipproject.playerPosition.d
+import io.github.ericjbyrd.partnershipproject.playerPosition.getPlayerCoords
+import io.github.ericjbyrd.partnershipproject.playerPosition.printPlayerCoords
 import net.miginfocom.swing.MigLayout
 import java.awt.*
 import java.awt.Event.F1
@@ -45,7 +45,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
         worldview.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
         worldview.setIcon(ImageIcon(path))
         forward.addActionListener {
-            val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y+1}D${playerPosition.d}F${playerPosition.f}.png"
+            val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y +1}D${playerPosition.d}F${playerPosition.f}.png"
             when (playerPosition.d) {
                 playerPosition.Direction.N -> {
                     playerPosition.printPlayerCoords()
@@ -59,7 +59,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
 
 
                 playerPosition.Direction.S -> {
-                    val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y-1}D${playerPosition.d}F${playerPosition.f}.png"
+                    val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y -1}D${playerPosition.d}F${playerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.y--
@@ -71,7 +71,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                 }
 
                 playerPosition.Direction.E -> {
-                    val path =  "src/main/resources/maps/F1/X${playerPosition.x+1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+                    val path =  "src/main/resources/maps/F1/X${playerPosition.x +1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.x++
@@ -81,7 +81,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                 }
 
                 playerPosition.Direction.W -> {
-                    val path =  "src/main/resources/maps/F1/X${playerPosition.x-1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+                    val path =  "src/main/resources/maps/F1/X${playerPosition.x -1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.x--

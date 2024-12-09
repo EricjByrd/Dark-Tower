@@ -1,4 +1,4 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
 import javax.swing.ImageIcon
 import javax.swing.JLabel

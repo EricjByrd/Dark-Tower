@@ -1,4 +1,4 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
 import com.formdev.flatlaf.FlatDarkLaf
 import net.miginfocom.swing.MigLayout
@@ -22,7 +22,7 @@ class Main : JPanel(MigLayout("ins 4, fill")) {
     private val descriptionPanel = DescriptionPanel()
     override fun paintComponent(g: Graphics?) {
         super.paintComponent(g)
-        g?.drawImage(backgroundImage,0,0, Main.defaultWidth, Main.defaultHeight, this)
+        g?.drawImage(backgroundImage,0,0, defaultWidth, defaultHeight, this)
     }
 
     init {
@@ -74,7 +74,7 @@ class Main : JPanel(MigLayout("ins 4, fill")) {
             logger.info("Starting Game: $TITLE")
             JFrame(TITLE).apply {
                 contentPane = Main()
-                setSize(Main.defaultWidth, Main.defaultHeight)
+                setSize(defaultWidth, defaultHeight)
                 setLocationRelativeTo(null)
                 isVisible = true
                 defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE

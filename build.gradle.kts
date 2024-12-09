@@ -4,7 +4,7 @@ plugins {
     application
 }
 
-group = "io.github.joshlha"
+group = "io.github.ericjbyrd"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -34,5 +34,5 @@ kotlin {
 }
 
 application {
-    mainClass.set("io.github.joshlha.partnershipproject.Main")
+    mainClass.set("io.github.ericjbyrd.partnershipproject.Main")
 }

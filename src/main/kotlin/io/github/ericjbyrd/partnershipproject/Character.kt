@@ -1,7 +1,7 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
-import io.github.joshlha.partnershipproject.playerPosition.x
-import io.github.joshlha.partnershipproject.playerPosition.y
+import io.github.ericjbyrd.partnershipproject.playerPosition.x
+import io.github.ericjbyrd.partnershipproject.playerPosition.y
 import java.sql.DriverManager.println
 
 //open means, open to interpretation and does not require an initialized value on override.
@@ -43,7 +43,7 @@ class Boss(override val name: String,
            override val defPoints: Int,
            override val matkPoints: Int,
            override val mdefPoints: Int): Monster(
-    name,health,atkPoints,defPoints,matkPoints,mdefPoints, mp,matkPoints, mdefPoints), specialCombatant{
+    name,health,atkPoints,defPoints,matkPoints,mdefPoints, mp,matkPoints, mdefPoints), specialCombatant {
     final override fun greet() {
         println("You have encountered $name!")
     }
@@ -72,7 +72,7 @@ class playerCharacter(override val name: String,
                       val atkPoints: Int,
                       val defPoints: Int,
                       val matkPoints: Int,
-                      val mdefPoints: Int, ): Character(name, health, mp, x, y), normCombatant, specialCombatant{
+                      val mdefPoints: Int, ): Character(name, health, mp, x, y), normCombatant, specialCombatant {
 
     override fun greet(){
         println("")

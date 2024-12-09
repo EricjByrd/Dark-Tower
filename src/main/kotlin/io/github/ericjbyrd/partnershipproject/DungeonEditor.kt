@@ -1,4 +1,4 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
 
 import java.awt.GridLayout

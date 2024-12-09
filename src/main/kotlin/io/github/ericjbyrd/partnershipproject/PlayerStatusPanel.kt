@@ -1,8 +1,8 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
-import io.github.joshlha.partnershipproject.playerPosition.d
-import io.github.joshlha.partnershipproject.playerPosition.f
-import io.github.joshlha.partnershipproject.playerPosition.getPlayerCoords
+import io.github.ericjbyrd.partnershipproject.playerPosition.d
+import io.github.ericjbyrd.partnershipproject.playerPosition.f
+import io.github.ericjbyrd.partnershipproject.playerPosition.getPlayerCoords
 import net.miginfocom.swing.MigLayout
 import javax.swing.JLabel
 import javax.swing.JPanel

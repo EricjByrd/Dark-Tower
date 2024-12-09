@@ -1,4 +1,4 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
 import net.miginfocom.swing.MigLayout
 import java.awt.Font
@@ -14,10 +14,10 @@ class ButtonPanel: JPanel(MigLayout()){
             font = font.deriveFont(Font.BOLD, 20F)
         }
     }
-    val upButton = ButtonPanel.DirectionButton("↑")
-    val downButton = ButtonPanel.DirectionButton("↓")
-    val leftButton = ButtonPanel.DirectionButton("←")
-    val rightButton = ButtonPanel.DirectionButton("→")
+    val upButton = DirectionButton("↑")
+    val downButton = DirectionButton("↓")
+    val leftButton = DirectionButton("←")
+    val rightButton = DirectionButton("→")
     init{
 
         add(upButton,"dock north, wrap")

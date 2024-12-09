@@ -1,4 +1,4 @@
-package io.github.joshlha.partnershipproject
+package io.github.ericjbyrd.partnershipproject
 
 import net.miginfocom.swing.MigLayout
 //import sun.jvm.hotspot.oops.CellTypeState.value
