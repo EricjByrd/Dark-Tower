@@ -36,6 +36,7 @@ object playerPosition {
         N,S,E,W
     }
     var f: Int = 1
+    //I decided to include dynamic coordinates for easier programming.
     val coordinates= "X:${x},Y:${y},D:${d}F${f}"
     fun printPlayerCoords(){
         println("X:${x},Y:${y},D:${d}${f}")

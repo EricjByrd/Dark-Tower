@@ -1,32 +1,57 @@
 package io.github.joshlha.partnershipproject
 
+import io.github.joshlha.partnershipproject.playerPosition.x
+import io.github.joshlha.partnershipproject.playerPosition.y
 import java.sql.DriverManager.println
 
-abstract class Character(open val name: String, open val health: Int, open val mp: Int) {
+//open means, open to interpretation and does not require an initialized value on override.
+//abstract means, open to interpretation but requires an initialized value on override.
+
+abstract class Character(open val name: String, open val health: Int, open val mp: Int, open val x: Int, open val y: Int) {
     abstract fun greet()
 }
-open class Monster(override val name: String, override val health: Int, override val mp: Int, open val atkPoints: Int, open val defPoints: Int
-,open val matkPoints: Int, open val mdefPoints: Int)
-    : Character(name, health, mp){
+
+open class Monster(override val name: String,
+                   override val health: Int,
+                   override val mp: Int,
+                   override val x: Int,
+                   override val y:Int,
+                   open val atkPoints: Int,
+                   open val defPoints: Int,
+                   open val matkPoints: Int,
+                   open val mdefPoints: Int) : Character(name, health, mp, x, y), normCombatant {
     override fun greet() {
         println("$name has approached!")
     }
 
+    override fun attack(): String {
+        return "${name} attacks!"
+    }
+
+    override fun magAttack(): String {
+        return "${name} used spell"
+    }
+
+
+
 }
 
-class Boss(override val name: String, override val health: Int, override val mp: Int, override val atkPoints: Int, override val defPoints: Int
-,override val matkPoints: Int, override val mdefPoints: Int): Monster(
-    name,health,atkPoints,defPoints,matkPoints,mdefPoints, mp), specialCombatant{
+class Boss(override val name: String,
+           override val health: Int,
+           override val mp: Int,
+           override val atkPoints: Int,
+           override val defPoints: Int,
+           override val matkPoints: Int,
+           override val mdefPoints: Int): Monster(
+    name,health,atkPoints,defPoints,matkPoints,mdefPoints, mp,matkPoints, mdefPoints), specialCombatant{
     final override fun greet() {
         println("You have encountered $name!")
     }
-    override fun attack() {
-        println("$name attacks!")
-        //return "$name attacks ferociously!"
+    override fun attack(): String {
+        return ("$name attacks ferociously!")
     }
     override fun defend(): String {
-        println("$name defends!")
-        return "$name defends!"
+        return ("$name defends!")
     }
     override fun magAttack(): String {
         println("$name used spell!")
@@ -41,14 +66,19 @@ class Boss(override val name: String, override val health: Int, override val mp:
 
 }
 
-class playerCharacter(override val name: String, override val health: Int, override val mp: Int, val atkPoints: Int, val defPoints: Int,
-                      val matkPoints: Int, val mdefPoints: Int, ): Character(name, health, mp), specialCombatant{
+class playerCharacter(override val name: String,
+                      override val health: Int,
+                      override val mp: Int,
+                      val atkPoints: Int,
+                      val defPoints: Int,
+                      val matkPoints: Int,
+                      val mdefPoints: Int, ): Character(name, health, mp, x, y), normCombatant, specialCombatant{
 
     override fun greet(){
         println("")
     }
-    override fun attack() {
-        println("$name attacks!")
+    override fun attack(): String {
+        return("$name attacks!")
     }
     override fun defend(): String {
         println("$name defends!")
@@ -66,17 +96,21 @@ class playerCharacter(override val name: String, override val health: Int, overr
     }
 }
 
+object monsterRepository{
+    val goblin = Monster("Goblin",10,20,5,5,2,3, 2,2)
+    val ghoul = Monster("Foul Ghoul",13,2,5,5,2,3,3,3)
+    val sorcerer = Monster("Wicked Sorcerer",10,20,5,5,20,30,20,15)
+}
+
+
 
 interface normCombatant{
-    fun attack()
-    fun defend()
-    fun magAttack()
+    fun attack(): String
+    fun magAttack(): String
 }
 
 interface specialCombatant{
-    fun attack()
     fun defend(): String
-    fun magAttack(): String
     fun magCure()
     fun specialMove()
 }
