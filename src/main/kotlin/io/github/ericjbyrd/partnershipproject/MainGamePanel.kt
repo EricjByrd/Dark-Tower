@@ -109,10 +109,10 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
 
                 playerPosition.Direction.S -> {
                     val path =
-                        "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y - 1}D${playerPosition.d}F${playerPosition.f}.png"
+                        "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y + 1}D${playerPosition.d}F${playerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.y--
+                        playerPosition.y++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }

@@ -1,12 +1,21 @@
 package io.github.ericjbyrd.partnershipproject
 
 
+import jdk.internal.org.jline.utils.Colors.s
+import net.miginfocom.swing.MigLayout
 import java.awt.GridLayout
+import java.io.File
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
 import javax.swing.JButton
+import javax.swing.JLabel
 import javax.swing.JPanel
 
 
-class DungeonEditor : JPanel(GridLayout(6,6,5,5)) {
+class DungeonEditor : JPanel(MigLayout("debug")) {
+    val item = testLabel()
+    val path = "src/main/resources/mapSourceFiles/background.png"
+    val image = ImageIO.read(File("src/main/resources/mapSourceFiles/background.png"))
 
     val button0 = JButton("X0Y0")
     val button1 = JButton("X0Y1")
@@ -26,11 +35,14 @@ class DungeonEditor : JPanel(GridLayout(6,6,5,5)) {
         button10,button11,button12,button13)
 
     init{
-        for(button in coordButtons){
-            add(button)
-        }
+    item.setIcon(ImageIcon(path))
+    item.graphics.drawImage(image,0,0,item)
+    add(item)
+
+
     }
 }
+
 
 
 
