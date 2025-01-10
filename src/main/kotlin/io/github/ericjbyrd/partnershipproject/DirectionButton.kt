@@ -20,9 +20,9 @@ class ButtonPanel: JPanel(MigLayout()){
     val rightButton = DirectionButton("→")
     init{
 
-        add(upButton,"dock north, wrap")
-        add(leftButton,"dock west")
-        add(rightButton, "dock east, wrap")
-        add(downButton, "dock south")
+        add(upButton,"dock north, wrap, grow")
+        add(leftButton,"dock west, grow")
+        add(rightButton, "dock east, wrap, grow")
+        add(downButton, "dock south, grow")
     }
 }

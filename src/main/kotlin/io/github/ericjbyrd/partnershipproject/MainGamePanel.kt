@@ -18,9 +18,11 @@ import javax.swing.text.html.HTML.Tag.S
 class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) {
     //Step 1; Initialize all components
     val totalview = JPanel()
-    val worldview = WorldViewLabel()
+    val worldviewLayer0 = WorldViewLayeredPanel()
+    val worldview = JLabel()
     val buttons = ButtonPanel()
     val playerStatsPanel = PlayerStatusPanel()
+    val overlayView = DungeonEditor()
 
 
     // Step 2; Add all the components to the layout (frame in this case)
@@ -32,7 +34,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
         val rightTurn = buttons.rightButton
 
         totalview.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
-        add(totalview, "span 2")
+        add(totalview, "grow")
         totalview.add(worldview)
         playerStatsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
         add(playerStatsPanel)
@@ -44,6 +46,8 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
         //why won't path work in my ActionListener?
         worldview.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
         worldview.setIcon(ImageIcon(path))
+
+
         forward.addActionListener {
             val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y +1}D${playerPosition.d}F${playerPosition.f}.png"
             when (playerPosition.d) {
@@ -65,7 +69,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                         playerPosition.y--
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
-
+                        worldview
                     }
 
                 }
@@ -77,6 +81,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                         playerPosition.x++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        Encounter(playerPosition.x,playerPosition.y,)
                         }
                 }
 

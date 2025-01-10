@@ -97,9 +97,15 @@ class playerCharacter(override val name: String,
 }
 
 object monsterRepository{
-    val goblin = Monster("Goblin",10,20,5,5,2,3, 2,2)
-    val ghoul = Monster("Foul Ghoul",13,2,5,5,2,3,3,3)
-    val sorcerer = Monster("Wicked Sorcerer",10,20,5,5,20,30,20,15)
+    val goblin = Monster("Goblin",10,20,1,2,2,3, 2,2)
+    val foulGhoul = Monster("Foul Ghoul",13,2,5,5,2,3,3,3)
+    val wickedSorcerer = Monster("Wicked Sorcerer",10,20,5,5,20,30,20,15)
+    val scavenger = Monster("Scavenger", 10, 10, 6,6,20,10,0,0)
+    val monsterList = mutableListOf<Monster>().add(goblin)
+    //possibly use index from monsterList in a function that randomly pulls an element(monster)
+    // so that random monsters appear.
+    //example of function -> If ((user x = 2) && (user y =2))
+    //          {encounter with monster inRange of monsterList indices}
 }
 
 

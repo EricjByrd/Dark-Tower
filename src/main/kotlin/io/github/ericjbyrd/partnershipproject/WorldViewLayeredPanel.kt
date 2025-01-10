@@ -2,13 +2,12 @@ package io.github.ericjbyrd.partnershipproject
 
 import javax.swing.ImageIcon
 import javax.swing.JLabel
+import javax.swing.JLayeredPane
 
-class WorldViewLabel() : JLabel() {
+class WorldViewLayeredPanel() : JLabel() {
     //what we see
-    }
-class testLabel(): JLabel(){
 
-}
+    }
 
 fun setWorldView(Label :JLabel, sight: ImageIcon){
 

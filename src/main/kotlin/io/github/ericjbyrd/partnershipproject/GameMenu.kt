@@ -57,7 +57,7 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
         dungeonEditor.addActionListener{
             JFrame("Dungeon Editor").apply {
                 contentPane = DungeonEditor()
-                setSize(600, 400)
+                setSize(fullscrnWidth.toInt(), fullscrnHeight.toInt())
                 setLocationRelativeTo(null)
                 isVisible = true
                 defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
