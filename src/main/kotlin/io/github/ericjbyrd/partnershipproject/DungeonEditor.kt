@@ -53,8 +53,10 @@ class DungeonEditor : JLayeredPane() {
         secondLayerPanel.setOpaque(true)
         secondLayerPanel.add(monsterLabel)
         secondLayerPanel.setBounds(25,26,600,400)
+        monsterLabel.setBounds(225,225,100,100)
         monsterLabel.setIcon(ImageIcon(monsterPath))
         secondLayerPanel.setBackground(Color(0,0,0,200))
+
 
         add(firstLayerPanel)
         firstLayerPanel.setOpaque(true)
