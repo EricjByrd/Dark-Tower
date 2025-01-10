@@ -49,23 +49,21 @@ class DungeonEditor : JLayeredPane() {
 
 
         //Monster layer
-        add(secondLayerPanel)
-        secondLayerPanel.setOpaque(false)
-        secondLayerPanel.setBackground(Color.GREEN)
-        secondLayerPanel.setBounds(25,25,600,400)
-        secondLayerPanel.setLayout(MigLayout("debug"))
+        add(secondLayerPanel, 1)
+        secondLayerPanel.setOpaque(true)
         secondLayerPanel.add(monsterLabel)
-        monsterLabel.setLayout(MigLayout("debug","[][][]"))
+        secondLayerPanel.setBounds(25,26,600,400)
         monsterLabel.setIcon(ImageIcon(monsterPath))
+        secondLayerPanel.setBackground(Color(0,0,0,200))
 
         add(firstLayerPanel)
-        firstLayerPanel.setOpaque(false)
+        firstLayerPanel.setOpaque(true)
         firstLayerPanel.setBackground(Color.WHITE)
         firstLayerPanel.setBounds(25,25,600,400)
         firstLayerPanel.add(worldView)
 
         worldView.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5, true))
-        val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y +1}D${playerPosition.d}F${playerPosition.f}.png"
+        val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y }D${playerPosition.d}F${playerPosition.f}.png"
         worldView.setIcon(ImageIcon(path))
 
         fun updateLabelCoords(){
