@@ -25,11 +25,13 @@ class DungeonEditor : JLayeredPane() {
 
     init{
         val monsterLabel = JLabel()
-        val monsterPath = "src/main/resources/monsters/demon.png"
+        val monsterImage = "src/main/resources/monsters/demon.png"
         val forward = buttonsPanel.upButton
         val backwards = buttonsPanel.downButton
         val leftTurn = buttonsPanel.leftButton
         val rightTurn = buttonsPanel.rightButton
+        val SHADED = Color(0,0,0,200)
+        val NORMAL = Color(0,0,0,0)
 
         //adding button panel to the JLayered Pane
         add(buttonsPanel)
@@ -47,15 +49,19 @@ class DungeonEditor : JLayeredPane() {
         thirdLayerPanel.setBackground(Color.RED)
         thirdLayerPanel.setBounds( 25,425,600, 50)
 
+        //monsterLayer
+        add(monsterLabel,0)
+        monsterLabel.setIcon(ImageIcon(monsterImage))
+        monsterLabel.setBounds(215,150,300,300)
 
-        //Monster layer
-        add(secondLayerPanel, 1)
-        secondLayerPanel.setOpaque(true)
-        secondLayerPanel.add(monsterLabel)
+        //encounterLayer
+        add(secondLayerPanel, 2)
+        secondLayerPanel.setOpaque(false)
         secondLayerPanel.setBounds(25,26,600,400)
-        monsterLabel.setBounds(225,225,100,100)
-        monsterLabel.setIcon(ImageIcon(monsterPath))
-        secondLayerPanel.setBackground(Color(0,0,0,200))
+        //secondLayerPanel.setBackground(NORMAL)
+        secondLayerPanel.setBackground(SHADED)
+                //when enemy is encountered, setBackground(SHADED), setOpaque(true)
+                //and set monsterLabel visible + ImageIcon(monsterImage)
 
 
         add(firstLayerPanel)
