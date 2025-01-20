@@ -1,53 +1,92 @@
 package io.github.ericjbyrd.partnershipproject
 
-import io.github.ericjbyrd.partnershipproject.Main.Companion.backgroundImage
-import io.github.ericjbyrd.partnershipproject.playerPosition.d
-import io.github.ericjbyrd.partnershipproject.playerPosition.getPlayerCoords
-import io.github.ericjbyrd.partnershipproject.playerPosition.printPlayerCoords
-import net.miginfocom.swing.MigLayout
-import java.awt.*
-import java.awt.Event.F1
-import java.awt.SystemColor.text
+
+import java.awt.Color
 import java.io.File
-import javax.imageio.ImageIO
-import javax.imageio.ImageReader
-import javax.swing.*
-import javax.swing.text.html.HTML.Attribute.N
-import javax.swing.text.html.HTML.Tag.S
+import javax.swing.BorderFactory
+import javax.swing.ImageIcon
+import javax.swing.JLabel
+import javax.swing.JLayeredPane
+import javax.swing.JPanel
 
-class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) {
-    //Step 1; Initialize all components
-    val totalview = JPanel()
-    val worldviewLayer0 = WorldViewLayeredPanel()
-    val worldview = JLabel()
-    val buttons = ButtonPanel()
+
+class MainGamePanel : JLayeredPane() {
+    val fourthLayerPanel = PlayerStatusPanel()
+    val thirdLayerPanel = JPanel()
+    val secondLayerPanel = JPanel()
+    val firstLayerPanel = JPanel()
+    val worldView = JLabel()
+    val buttonsPanel = ButtonPanel()
     val playerStatsPanel = PlayerStatusPanel()
-    val overlayView = DungeonEditor()
+
+    init{
+        val monsterLabel = JLabel()
+        val monsterImage = "src/main/resources/monsters/demon.png"
+        val dialogueLabel = JLabel("Let's get to work.")
+        val forward = buttonsPanel.upButton
+        val backwards = buttonsPanel.downButton
+        val leftTurn = buttonsPanel.leftButton
+        val rightTurn = buttonsPanel.rightButton
+        val SHADED = Color(0,0,0,200)
+        val NORMAL = Color(0,0,0,0)
+
+        //adding button panel to the JLayered Pane
+        add(buttonsPanel)
+        buttonsPanel.setBounds(700,400,100,67)
+
+        //Player Stats Panel
+        add(fourthLayerPanel)
+        setLayer(fourthLayerPanel, 0,0)
+        fourthLayerPanel.setOpaque(true)
+        fourthLayerPanel.setBackground(Color.BLACK)
+        fourthLayerPanel.setBounds( 550,30,150, 300)
+        fourthLayerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,5,true))
 
 
-    // Step 2; Add all the components to the layout (frame in this case)
-    init {
-        isOpaque = false
-        val forward = buttons.upButton
-        val backwards = buttons.downButton
-        val leftTurn = buttons.leftButton
-        val rightTurn = buttons.rightButton
+        add(thirdLayerPanel,1,1)
+        thirdLayerPanel.setOpaque(true)
+        thirdLayerPanel.setBackground(Color.BLACK)
+        thirdLayerPanel.setBounds( 25,400,600, 150)
+        thirdLayerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,5,true))
 
-        totalview.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
-        add(totalview, "grow")
-        totalview.add(worldview)
-        playerStatsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
-        add(playerStatsPanel)
-        add(buttons,"skip 2")
-        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+        thirdLayerPanel.add(dialogueLabel)
+
+
+        //monsterLayer
+        add(monsterLabel,0)
+        monsterLabel.setIcon(ImageIcon(monsterImage))
+        monsterLabel.setBounds(215,160,300,300)
+        monsterLabel.setVisible(true)
+
+        //encounterLayer
+        add(secondLayerPanel, 1)
+        secondLayerPanel.setOpaque(false)
+        secondLayerPanel.setBounds(25,26,600,400)
+        //secondLayerPanel.setBackground(NORMAL)
+        secondLayerPanel.setBackground(SHADED)
+                //when enemy is encountered, setBackground(SHADED), setOpaque(true)
+                //and set monsterLabel visible + ImageIcon(monsterImage)
+
+
+        add(firstLayerPanel)
+        firstLayerPanel.setOpaque(true)
+        firstLayerPanel.setBackground(NORMAL)
+        firstLayerPanel.setBounds(25,25,600,400)
+        firstLayerPanel.add(worldView)
+
+        worldView.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5, true))
+        val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y }D${playerPosition.d}F${playerPosition.f}.png"
+        worldView.setIcon(ImageIcon(path))
+
         fun updateLabelCoords(){
-            playerStatsPanel.playerCoord.setText(playerPosition.getPlayerCoords())
+            fourthLayerPanel.playerCoord.setText(playerPosition.getPlayerCoords())
         }
-        //why won't path work in my ActionListener?
-        worldview.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
-        worldview.setIcon(ImageIcon(path))
-
-
+        fun outOfBoundsText(){
+            dialogueLabel.setText("Ouch!")
+        }
+        fun clearText(){
+            dialogueLabel.setText("")
+        }
         forward.addActionListener {
             val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y +1}D${playerPosition.d}F${playerPosition.f}.png"
             when (playerPosition.d) {
@@ -55,9 +94,13 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     playerPosition.printPlayerCoords()
                     val file = File(path)
                     if (file.exists()) {
+                        clearText()
                         playerPosition.y++
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                    }
+                    else{
+                        outOfBoundsText()
                     }
                 }
 
@@ -67,9 +110,9 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.y--
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
-                        worldview
+                        worldView
                     }
 
                 }
@@ -79,10 +122,10 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.x++
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
                         Encounter(playerPosition.x,playerPosition.y,)
-                        }
+                    }
                 }
 
                 playerPosition.Direction.W -> {
@@ -90,7 +133,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.x--
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
 
                     }
@@ -107,7 +150,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.y--
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
@@ -118,7 +161,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.y++
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
@@ -129,7 +172,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.x--
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
@@ -140,7 +183,7 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
                     val file = File(path)
                     if (file.exists()) {
                         playerPosition.x++
-                        worldview.setIcon(ImageIcon(path))
+                        worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
@@ -148,108 +191,97 @@ class MainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[][][]"))) 
             }
         }
         leftTurn.addActionListener {
-                when (playerPosition.d) {
-                    playerPosition.Direction.N -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DWF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.W
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
-                    }
-
-                    playerPosition.Direction.S -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DEF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.E
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
-                    }
-
-                    playerPosition.Direction.E -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DNF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.N
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
-                    }
-
-                    playerPosition.Direction.W -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DSF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.S
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
+            when (playerPosition.d) {
+                playerPosition.Direction.N -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DWF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.W
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
                     }
                 }
 
-            }
-            rightTurn.addActionListener {
-                when (playerPosition.d) {
-                    playerPosition.Direction.N -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DEF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.E
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
-                    }
-
-                    playerPosition.Direction.S -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DWF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.W
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
-                    }
-
-                    playerPosition.Direction.E -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DSF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.S
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
-                    }
-
-                    playerPosition.Direction.W -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DNF${playerPosition.f}.png"
-                        val file = File(path)
-                        if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.N
-                            worldview.setIcon(ImageIcon(path))
-                            updateLabelCoords()
-                        }
+                playerPosition.Direction.S -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DEF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.E
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
                     }
                 }
 
+                playerPosition.Direction.E -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DNF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.N
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
+                    }
+                }
+
+                playerPosition.Direction.W -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DSF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.S
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
+                    }
+                }
             }
+
+        }
+        rightTurn.addActionListener {
+            when (playerPosition.d) {
+                playerPosition.Direction.N -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DEF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.E
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
+                    }
+                }
+
+                playerPosition.Direction.S -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DWF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.W
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
+                    }
+                }
+
+                playerPosition.Direction.E -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DSF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.S
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
+                    }
+                }
+
+                playerPosition.Direction.W -> {
+                    val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DNF${playerPosition.f}.png"
+                    val file = File(path)
+                    if (file.exists()) {
+                        playerPosition.d = playerPosition.Direction.N
+                        worldView.setIcon(ImageIcon(path))
+                        updateLabelCoords()
+                    }
+                }
+            }
+
         }
     }
+}
 
 
 
 
-//        exitButton.addActionListener(
-//            object : ActionListener{
-//                override fun actionPerformed(e: ActionEvent?) {
-//                    println("Doing something")
-//                }
-//
-//            }
-//        )
-            //Simplified version of the code above
 
-
-        // Step 3: Set up event listeners for your components
