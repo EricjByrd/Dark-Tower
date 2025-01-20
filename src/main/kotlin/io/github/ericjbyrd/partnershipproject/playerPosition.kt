@@ -77,10 +77,10 @@ object playerPosition {
 }
 open class mapCell(X: Int?, Y: Int?, F: Int) {
 
-    val northImagePath = "src/main/resources/maps/X${X}Y${Y}DNF${F}.png"
-    val southImagePath = "src/main/resources/maps/X${X}Y${Y}DSF${F}.png"
-    val eastImagePath = "src/main/resources/maps/X${X}Y${Y}DEF${F}.png"
-    val westImagePath = "src/main/resources/maps/X${X}Y${Y}DWF${F}.png"
+    val northImagePath = "src/main/resources/maps/F1/X${X}Y${Y}DNF${F}.png"
+    val southImagePath = "src/main/resources/maps/F1/X${X}Y${Y}DSF${F}.png"
+    val eastImagePath = "src/main/resources/maps/F1/X${X}Y${Y}DEF${F}.png"
+    val westImagePath = "src/main/resources/maps/F1/X${X}Y${Y}DWF${F}.png"
 
     val northImage = ImageIcon(northImagePath)
     val southImage = ImageIcon(southImagePath)
@@ -88,12 +88,13 @@ open class mapCell(X: Int?, Y: Int?, F: Int) {
     val westImage = ImageIcon(westImagePath)
 
     fun FileCheck(): Boolean {
+        println(northImagePath)
         if (File(northImagePath).exists() &&
             File(southImagePath).exists() &&
             File(eastImagePath).exists() &&
             File(westImagePath).exists()
         ) {
-            "file exists!"
+            println("image loaded")
             return true
         } else {
             println("The location does not exist on this map!")
@@ -108,9 +109,10 @@ open class mapCell(X: Int?, Y: Int?, F: Int) {
 
         for (x in 0 until pX) {
             for (y in 0 until pY) {
-                val cell = mapCell(x, y, 0)
+                val cell = mapCell(x, y, 1)
                 if (cell.FileCheck()) {
                     xyArray[x][y] = cell
+                    println(xyArray[x][y])
                 }
             }
         }

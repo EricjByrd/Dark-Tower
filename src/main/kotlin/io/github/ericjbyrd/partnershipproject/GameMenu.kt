@@ -52,7 +52,7 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
                 setLocationRelativeTo(null)
                 isVisible = true
                 defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
-                mapCell(0,0,1).FileCheck()
+                mapCell(0,0,1).BuildLevel()
             }
         }
         dungeonEditor.addActionListener{
