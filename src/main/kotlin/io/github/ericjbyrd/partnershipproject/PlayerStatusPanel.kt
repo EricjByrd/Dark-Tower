@@ -1,10 +1,7 @@
 package io.github.ericjbyrd.partnershipproject
 
-import io.github.ericjbyrd.partnershipproject.playerPosition.d
-import io.github.ericjbyrd.partnershipproject.playerPosition.f
 import io.github.ericjbyrd.partnershipproject.playerPosition.getPlayerCoords
 import io.github.ericjbyrd.partnershipproject.playerPosition.stepCounter
-import jdk.internal.org.jline.utils.Colors.J
 import net.miginfocom.swing.MigLayout
 import javax.swing.JLabel
 import javax.swing.JPanel
