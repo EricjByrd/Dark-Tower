@@ -1,6 +1,7 @@
 package io.github.ericjbyrd.partnershipproject
 
 
+import io.github.ericjbyrd.partnershipproject.playerPosition.stepCounter
 import java.awt.Color
 import java.io.File
 import javax.swing.BorderFactory
@@ -78,6 +79,10 @@ class MainGamePanel : JLayeredPane() {
         val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y }D${playerPosition.d}F${playerPosition.f}.png"
         worldView.setIcon(ImageIcon(path))
 
+
+        fun updateSteps(){
+            fourthLayerPanel.stepCounter.setText(playerPosition.stepCounter())
+        }
         fun updateLabelCoords(){
             fourthLayerPanel.playerCoord.setText(playerPosition.getPlayerCoords())
         }
@@ -98,6 +103,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.y++
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        updateSteps()
                     }
                     else{
                         outOfBoundsText()
@@ -112,7 +118,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.y--
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
-                        worldView
+                        updateSteps()
                     }
 
                 }
@@ -124,7 +130,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.x++
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
-                        Encounter(playerPosition.x,playerPosition.y,)
+                        updateSteps()
                     }
                 }
 
@@ -135,6 +141,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.x--
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        updateSteps()
 
                     }
                 }
@@ -152,6 +159,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.y--
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        updateSteps()
                     }
                 }
 
@@ -163,6 +171,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.y++
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        updateSteps()
                     }
                 }
 
@@ -174,6 +183,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.x--
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        updateSteps()
                     }
                 }
 
@@ -185,6 +195,7 @@ class MainGamePanel : JLayeredPane() {
                         playerPosition.x++
                         worldView.setIcon(ImageIcon(path))
                         updateLabelCoords()
+                        updateSteps()
                     }
                 }
 

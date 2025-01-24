@@ -30,6 +30,7 @@ fun CheckBounds(path: String): Boolean {
 object playerPosition {
     //this can serve as coordinates AND locations for the map.
     //Idea credited to the brilliant RyiSnow!
+    var counter = 0
     var x: Int = 0
     fun coordCheck(coord: Int){
         if (coord == 0){
@@ -51,18 +52,20 @@ object playerPosition {
         return "X:${x},Y:${y},D:${d}${f}"
     }
 
+    fun stepCounter (): String {
+        var playerY = y
+        var playerX = x
+        var initialY = 0
+        var initialX = 0
+        if (playerY != initialY || playerX != initialX) {
+            counter++
+        }
+        println(counter)
+        return "Steps: ${counter}"
+    }
+
 }
 
-//function to potentially add images to coordinates.
-    fun addViews(list: ArrayList<String>, x: Int, y: Int, f: Int) {
-    val north: String = "src/main/resources/maps/F1/X${x}Y${y}DNF${f}.png"
-    val south: String = "src/main/resources/maps/F1/X${x}Y${y}DSF${f}.png"
-    val east: String = "src/main/resources/maps/F1/X${x}Y${y}DEF${f}.png"
-    val west: String = "src/main/resources/maps/F1/X${x}Y${y}DWF${f}.png"
-    list.add(north)
-    list.add(south)
-    list.add(east)
-    list.add(west)
 
 
     //objective: Create a 3D Array to represent each level.
@@ -74,8 +77,8 @@ object playerPosition {
     //if [X][Y+1][0].northImage does not exist, we write "Ouch!" to label because it's a wall.
 
     //Creating an Object of items to go into the 3D Array.
-}
-open class mapCell(X: Int?, Y: Int?, F: Int) {
+
+class mapCell(X: Int?, Y: Int?, F: Int) {
 
     val northImagePath = "src/main/resources/maps/F1/X${X}Y${Y}DNF${F}.png"
     val southImagePath = "src/main/resources/maps/F1/X${X}Y${Y}DSF${F}.png"
@@ -88,36 +91,34 @@ open class mapCell(X: Int?, Y: Int?, F: Int) {
     val westImage = ImageIcon(westImagePath)
 
     fun FileCheck(): Boolean {
-        println(northImagePath)
         if (File(northImagePath).exists() &&
             File(southImagePath).exists() &&
             File(eastImagePath).exists() &&
             File(westImagePath).exists()
         ) {
-            println("image loaded")
+            //println("image loaded")
             return true
         } else {
-            println("The location does not exist on this map!")
+            //println("The location does not exist on this map!")
             return false
         }
     }
+}
 
-    fun BuildLevel() {
-        val pX = 6
-        val pY = 6
-        val xyArray = Array(pX) { arrayOfNulls<mapCell?>(pY) }
+fun buildLevel(pX: Int, pY: Int) :kotlin.Array<kotlin.Array<mapCell?>>{
+    val xyArray = Array(pX) { arrayOfNulls<mapCell?>(pY) }
 
-        for (x in 0 until pX) {
-            for (y in 0 until pY) {
-                val cell = mapCell(x, y, 1)
-                if (cell.FileCheck()) {
-                    xyArray[x][y] = cell
-                    println(xyArray[x][y])
-                }
+    for (x in 0 until pX) {
+        for (y in 0 until pY) {
+            val cell = mapCell(x, y, 1)
+            if (cell.FileCheck()) {
+                xyArray[x][y] = cell
             }
         }
     }
+    return xyArray
 }
+
 
 
 

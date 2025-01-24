@@ -47,12 +47,14 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
         }
         loadButton.addActionListener {
             JFrame("Load Game").apply {
+                val levelOne = buildLevel(6,6)
+                println(levelOne[0][0]?.northImagePath)
                 contentPane = JPanel()
                 setSize(600, 400)
                 setLocationRelativeTo(null)
                 isVisible = true
                 defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
-                mapCell(0,0,1).BuildLevel()
+
             }
         }
         dungeonEditor.addActionListener{

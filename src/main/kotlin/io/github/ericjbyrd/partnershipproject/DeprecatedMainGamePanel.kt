@@ -69,7 +69,6 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
                         playerPosition.x++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
-                        Encounter(playerPosition.x,playerPosition.y,)
                         }
                 }
 
