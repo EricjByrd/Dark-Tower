@@ -1,10 +1,13 @@
 package io.github.ericjbyrd.partnershipproject
 
+import Encounter
 import net.miginfocom.swing.MigLayout
+import java.awt.FlowLayout
 //import sun.jvm.hotspot.oops.CellTypeState.value
 import java.awt.Font
 import java.awt.Toolkit
 import javax.swing.*
+import javax.swing.text.StyleConstants.setIcon
 
 class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")) {
 
@@ -47,9 +50,9 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
         }
         loadButton.addActionListener {
             JFrame("Load Game").apply {
-                val levelOne = buildLevel(6,6)
+                val levelOne = buildLevel()
                 println(levelOne[0][0]?.northImagePath)
-                contentPane = JPanel()
+                contentPane = Encounter()
                 setSize(600, 400)
                 setLocationRelativeTo(null)
                 isVisible = true

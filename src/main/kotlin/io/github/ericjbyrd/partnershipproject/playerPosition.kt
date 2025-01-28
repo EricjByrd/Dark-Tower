@@ -105,17 +105,23 @@ class mapCell(X: Int?, Y: Int?, F: Int) {
     }
 }
 
-fun buildLevel(pX: Int, pY: Int) :kotlin.Array<kotlin.Array<mapCell?>>{
+fun buildLevel() :kotlin.Array<kotlin.Array<mapCell?>>{
+    val pX = 20
+    val pY = 20
     val xyArray = Array(pX) { arrayOfNulls<mapCell?>(pY) }
+    println("Loading level")
 
     for (x in 0 until pX) {
         for (y in 0 until pY) {
             val cell = mapCell(x, y, 1)
             if (cell.FileCheck()) {
+                println("Loading level assets.")
                 xyArray[x][y] = cell
             }
         }
     }
+    println("Loading complete")
+    println("May fortune be on your side.")
     return xyArray
 }
 
