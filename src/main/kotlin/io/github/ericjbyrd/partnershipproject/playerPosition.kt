@@ -16,7 +16,7 @@ import java.sql.Array
 import javax.swing.ImageIcon
 import javax.swing.text.html.HTML.Attribute.N
 
-fun CheckBounds(path: String): Boolean {
+fun CheckBounds(path: String?): Boolean {
     val item = File(path)
     val result = if (!item.exists()){
         return true
@@ -53,15 +53,15 @@ object playerPosition {
     }
 
     fun stepCounter (): String {
-        var playerY = y
-        var playerX = x
-        var initialY = 0
-        var initialX = 0
+        val playerY = y
+        val playerX = x
+        val initialY = 0
+        val initialX = 0
         if (playerY != initialY || playerX != initialX) {
             counter++
         }
         println(counter)
-        return "Steps: ${counter}"
+        return "Steps: $counter"
     }
 
 }

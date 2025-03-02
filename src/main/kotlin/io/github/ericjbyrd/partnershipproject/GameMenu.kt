@@ -40,8 +40,9 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
         //Simplified version of the code above:
         newGameButton.addActionListener {
             JFrame("Record of Lodoss Wars").apply {
+                val levelOne = buildLevel()
                 contentPane = MainGamePanel()
-                setSize(fullscrnWidth.toInt(), fullscrnHeight.toInt())
+                setSize(600, 400)
                 setLocationRelativeTo(null)
                 isVisible = true
                 defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
