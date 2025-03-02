@@ -27,9 +27,9 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
         playerStatsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
         add(playerStatsPanel)
         add(buttons,"skip 2")
-        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}D${PlayerPosition.d}F${PlayerPosition.f}.png"
         fun updateLabelCoords(){
-            playerStatsPanel.playerCoord.setText(playerPosition.getPlayerCoords())
+            playerStatsPanel.playerCoord.setText(PlayerPosition.getPlayerCoords())
         }
         //why won't path work in my ActionListener?
         worldview.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5))
@@ -37,24 +37,24 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
 
 
         forward.addActionListener {
-            val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y +1}D${playerPosition.d}F${playerPosition.f}.png"
-            when (playerPosition.d) {
-                playerPosition.Direction.N -> {
-                    playerPosition.printPlayerCoords()
+            val path =  "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y +1}D${PlayerPosition.d}F${PlayerPosition.f}.png"
+            when (PlayerPosition.d) {
+                PlayerPosition.Direction.N -> {
+                    PlayerPosition.printPlayerCoords()
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.y++
+                        PlayerPosition.y++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
 
 
-                playerPosition.Direction.S -> {
-                    val path =  "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y -1}D${playerPosition.d}F${playerPosition.f}.png"
+                PlayerPosition.Direction.S -> {
+                    val path =  "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y -1}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.y--
+                        PlayerPosition.y--
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                         worldview
@@ -62,21 +62,21 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
 
                 }
 
-                playerPosition.Direction.E -> {
-                    val path =  "src/main/resources/maps/F1/X${playerPosition.x +1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+                PlayerPosition.Direction.E -> {
+                    val path =  "src/main/resources/maps/F1/X${PlayerPosition.x +1}Y${PlayerPosition.y}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.x++
+                        PlayerPosition.x++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                         }
                 }
 
-                playerPosition.Direction.W -> {
-                    val path =  "src/main/resources/maps/F1/X${playerPosition.x -1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+                PlayerPosition.Direction.W -> {
+                    val path =  "src/main/resources/maps/F1/X${PlayerPosition.x -1}Y${PlayerPosition.y}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.x--
+                        PlayerPosition.x--
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
 
@@ -87,46 +87,46 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
         }
 
         backwards.addActionListener {
-            when (playerPosition.d) {
-                playerPosition.Direction.N -> {
+            when (PlayerPosition.d) {
+                PlayerPosition.Direction.N -> {
                     val path =
-                        "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y - 1}D${playerPosition.d}F${playerPosition.f}.png"
+                        "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y - 1}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.y--
+                        PlayerPosition.y--
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
 
-                playerPosition.Direction.S -> {
+                PlayerPosition.Direction.S -> {
                     val path =
-                        "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y + 1}D${playerPosition.d}F${playerPosition.f}.png"
+                        "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y + 1}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.y++
+                        PlayerPosition.y++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
 
-                playerPosition.Direction.E -> {
+                PlayerPosition.Direction.E -> {
                     val path =
-                        "src/main/resources/maps/F1/X${playerPosition.x - 1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+                        "src/main/resources/maps/F1/X${PlayerPosition.x - 1}Y${PlayerPosition.y}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.x--
+                        PlayerPosition.x--
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
                 }
 
-                playerPosition.Direction.W -> {
+                PlayerPosition.Direction.W -> {
                     val path =
-                        "src/main/resources/maps/F1/X${playerPosition.x + 1}Y${playerPosition.y}D${playerPosition.d}F${playerPosition.f}.png"
+                        "src/main/resources/maps/F1/X${PlayerPosition.x + 1}Y${PlayerPosition.y}D${PlayerPosition.d}F${PlayerPosition.f}.png"
                     val file = File(path)
                     if (file.exists()) {
-                        playerPosition.x++
+                        PlayerPosition.x++
                         worldview.setIcon(ImageIcon(path))
                         updateLabelCoords()
                     }
@@ -135,42 +135,42 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
             }
         }
         leftTurn.addActionListener {
-                when (playerPosition.d) {
-                    playerPosition.Direction.N -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DWF${playerPosition.f}.png"
+                when (PlayerPosition.d) {
+                    PlayerPosition.Direction.N -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DWF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.W
+                            PlayerPosition.d = PlayerPosition.Direction.W
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
                     }
 
-                    playerPosition.Direction.S -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DEF${playerPosition.f}.png"
+                    PlayerPosition.Direction.S -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DEF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.E
+                            PlayerPosition.d = PlayerPosition.Direction.E
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
                     }
 
-                    playerPosition.Direction.E -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DNF${playerPosition.f}.png"
+                    PlayerPosition.Direction.E -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DNF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.N
+                            PlayerPosition.d = PlayerPosition.Direction.N
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
                     }
 
-                    playerPosition.Direction.W -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DSF${playerPosition.f}.png"
+                    PlayerPosition.Direction.W -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DSF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.S
+                            PlayerPosition.d = PlayerPosition.Direction.S
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
@@ -179,42 +179,42 @@ class DeprecatedMainGamePanel() : JPanel((MigLayout("debug, wrap 2", "[][][]","[
 
             }
             rightTurn.addActionListener {
-                when (playerPosition.d) {
-                    playerPosition.Direction.N -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DEF${playerPosition.f}.png"
+                when (PlayerPosition.d) {
+                    PlayerPosition.Direction.N -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DEF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.E
+                            PlayerPosition.d = PlayerPosition.Direction.E
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
                     }
 
-                    playerPosition.Direction.S -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DWF${playerPosition.f}.png"
+                    PlayerPosition.Direction.S -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DWF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.W
+                            PlayerPosition.d = PlayerPosition.Direction.W
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
                     }
 
-                    playerPosition.Direction.E -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DSF${playerPosition.f}.png"
+                    PlayerPosition.Direction.E -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DSF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.S
+                            PlayerPosition.d = PlayerPosition.Direction.S
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }
                     }
 
-                    playerPosition.Direction.W -> {
-                        val path = "src/main/resources/maps/F1/X${playerPosition.x}Y${playerPosition.y}DNF${playerPosition.f}.png"
+                    PlayerPosition.Direction.W -> {
+                        val path = "src/main/resources/maps/F1/X${PlayerPosition.x}Y${PlayerPosition.y}DNF${PlayerPosition.f}.png"
                         val file = File(path)
                         if (file.exists()) {
-                            playerPosition.d = playerPosition.Direction.N
+                            PlayerPosition.d = PlayerPosition.Direction.N
                             worldview.setIcon(ImageIcon(path))
                             updateLabelCoords()
                         }

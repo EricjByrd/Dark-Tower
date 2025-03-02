@@ -36,3 +36,7 @@ kotlin {
 application {
     mainClass.set("io.github.ericjbyrd.partnershipproject.Main")
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}

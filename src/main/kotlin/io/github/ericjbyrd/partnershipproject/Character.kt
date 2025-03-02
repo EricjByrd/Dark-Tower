@@ -1,21 +1,25 @@
 package io.github.ericjbyrd.partnershipproject
 
-import io.github.ericjbyrd.partnershipproject.playerPosition.x
-import io.github.ericjbyrd.partnershipproject.playerPosition.y
+import io.github.ericjbyrd.partnershipproject.PlayerPosition.x
+import io.github.ericjbyrd.partnershipproject.PlayerPosition.y
 import java.sql.DriverManager.println
 
 //open means, open to interpretation and does not require an initialized value on override.
 //abstract means, open to interpretation but requires an initialized value on override.
 
-abstract class Character(open val name: String, open val health: Int, open val mp: Int, open val x: Int, open val y: Int) {
+abstract class Character(open val name: String,
+                         open var health: Int,
+                         open val maxHealth: Int,
+                         open var mp: Int,
+                         open val maxMP: Int) {
     abstract fun greet()
 }
 
 open class Monster(override val name: String,
-                   override val health: Int,
-                   override val mp: Int,
-                   override val x: Int,
-                   override val y:Int,
+                   override var health: Int,
+                   override val maxHealth: Int,
+                   override var mp: Int,
+                   override val maxMP: Int,
                    open val atkPoints: Int,
                    open val defPoints: Int,
                    open val matkPoints: Int,
@@ -24,11 +28,12 @@ open class Monster(override val name: String,
         println("$name has approached!")
     }
 
-    override fun attack(): String {
+    override fun attack(character: playerCharacter): String {
         return "${name} attacks!"
+        character.health = character.health - 1
     }
 
-    override fun magAttack(): String {
+    override fun magAttack(character: playerCharacter): String {
         return "${name} used spell"
     }
 
@@ -37,8 +42,8 @@ open class Monster(override val name: String,
 }
 
 class Boss(override val name: String,
-           override val health: Int,
-           override val mp: Int,
+           override var health: Int,
+           override var mp: Int,
            override val atkPoints: Int,
            override val defPoints: Int,
            override val matkPoints: Int,
@@ -47,13 +52,13 @@ class Boss(override val name: String,
     final override fun greet() {
         println("You have encountered $name!")
     }
-    override fun attack(): String {
+    override fun attack(character: playerCharacter): String {
         return ("$name attacks ferociously!")
     }
     override fun defend(): String {
         return ("$name defends!")
     }
-    override fun magAttack(): String {
+    override fun magAttack(character: playerCharacter): String {
         println("$name used spell!")
         return ""
     }
@@ -67,31 +72,32 @@ class Boss(override val name: String,
 }
 
 class playerCharacter(override val name: String,
-                      override val health: Int,
-                      override val mp: Int,
+                      override var health: Int,
+                      override val maxHealth: Int,
+                      override var mp: Int,
+                      override val maxMP: Int,
                       val atkPoints: Int,
                       val defPoints: Int,
                       val matkPoints: Int,
-                      val mdefPoints: Int, ): Character(name, health, mp, x, y), normCombatant, specialCombatant {
+                      val mdefPoints: Int): Character(name,health,maxHealth,mp, maxMP) {
 
     override fun greet(){
         println("")
     }
-    override fun attack(): String {
+    fun attack(monster: Monster): String {
         return("$name attacks!")
     }
-    override fun defend(): String {
-        println("$name defends!")
-        return "yes"
+    fun defend(): String {
+        return("$name defends!")
     }
-    override fun magAttack(): String {
+    fun magAttack(monster: Monster): String {
         println("$name used spell!")
         return "yes"
     }
-    override fun magCure() {
+    fun magCure() {
         println("$name used //cureSpell!")
     }
-    override fun specialMove() {
+    fun specialMove() {
         println("$name uses the special move //move")
     }
 }
@@ -108,11 +114,9 @@ object monsterRepository{
     //          {encounter with monster inRange of monsterList indices}
 }
 
-
-
 interface normCombatant{
-    fun attack(): String
-    fun magAttack(): String
+    fun attack(character: playerCharacter): String
+    fun magAttack(character: playerCharacter): String
 }
 
 interface specialCombatant{

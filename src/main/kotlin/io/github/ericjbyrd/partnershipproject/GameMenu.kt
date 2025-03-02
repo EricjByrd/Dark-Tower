@@ -1,6 +1,5 @@
 package io.github.ericjbyrd.partnershipproject
 
-import Encounter
 import net.miginfocom.swing.MigLayout
 import java.awt.FlowLayout
 //import sun.jvm.hotspot.oops.CellTypeState.value
@@ -39,27 +38,28 @@ class GameMenu : JPanel(MigLayout("flowy, alignx center, aligny center, gap 50")
 //        )
         //Simplified version of the code above:
         newGameButton.addActionListener {
-            JFrame("Record of Lodoss Wars").apply {
+            JFrame("Dark Tower").apply {
+                buildLevel(20,20, 1)
                 contentPane = MainGamePanel()
-                setSize(fullscrnWidth.toInt(), fullscrnHeight.toInt())
+                setSize(1000, 650)
                 setLocationRelativeTo(null)
                 isVisible = true
                 defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
 
             }
         }
-        loadButton.addActionListener {
-            JFrame("Load Game").apply {
-                val levelOne = buildLevel()
-                println(levelOne[0][0]?.northImagePath)
-                contentPane = Encounter()
-                setSize(600, 400)
-                setLocationRelativeTo(null)
-                isVisible = true
-                defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
-
-            }
-        }
+//        loadButton.addActionListener {
+//            JFrame("Load Game").apply {
+////                val levelOne = buildLevel(20,20)
+////                println(levelOne[0][0]?.northImagePath)
+////                contentPane = Encounter()
+////                setSize(600, 400)
+////                setLocationRelativeTo(null)
+////                isVisible = true
+////                defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
+//
+//            }
+//        }
         dungeonEditor.addActionListener{
             JFrame("Dungeon Editor").apply {
                 contentPane = JPanel()

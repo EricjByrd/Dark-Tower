@@ -1,50 +1,41 @@
 package io.github.ericjbyrd.partnershipproject
-
-import com.jidesoft.swing.Sticky
-import io.github.ericjbyrd.partnershipproject.playerPosition.d
-import io.github.ericjbyrd.partnershipproject.playerPosition.f
-import io.github.ericjbyrd.partnershipproject.playerPosition.x
-import io.github.ericjbyrd.partnershipproject.playerPosition.y
-import java.io.File
-import jdk.internal.org.jline.utils.Colors.h
-import jdk.internal.org.jline.utils.Colors.s
+import io.github.ericjbyrd.partnershipproject.PlayerPosition.f
+import io.github.ericjbyrd.partnershipproject.PlayerPosition.x
+import io.github.ericjbyrd.partnershipproject.monsterRepository.goblin
 import net.miginfocom.layout.LinkHandler.X
-import net.miginfocom.layout.LinkHandler.Y
-import java.awt.Image
-import java.nio.file.Path
-import java.sql.Array
+import java.awt.Color
+import java.awt.Panel
+import java.io.File
 import javax.swing.ImageIcon
-import javax.swing.text.html.HTML.Attribute.N
+import javax.swing.JPanel
 
-fun CheckBounds(path: String): Boolean {
-    val item = File(path)
-    val result = if (!item.exists()){
-        return true
-    }
-    else{
-        return false
-    }
-    return result
-}
-
-object playerPosition {
+object PlayerPosition {
     //this can serve as coordinates AND locations for the map.
     //Idea credited to the brilliant RyiSnow!
     var counter = 0
     var x: Int = 0
-    fun coordCheck(coord: Int){
-        if (coord == 0){
-            println("Cannot go any further")
-        }
-    }
     var y: Int = 0
     var d: Direction = Direction.N
+
     enum class Direction{
         N,S,E,W
     }
     var f: Int = 1
     //I decided to include dynamic coordinates for easier programming.
     val coordinates= "X:${x},Y:${y},D:${d}F${f}"
+    fun incrementX(minX: Int, maxX: Int){
+        x = x.inc().coerceIn(minX..maxX)
+    }
+    fun decrementX(minX: Int, maxX: Int){
+        x = x.dec().coerceIn(minX..maxX)
+    }
+    fun incrementY(minY: Int, maxY: Int){
+        y = y.inc().coerceIn(minY..maxY)
+    }
+    fun decrementY(minY: Int, maxY: Int){
+        y = y.dec().coerceIn(minY..maxY)
+    }
+
     fun printPlayerCoords(){
         println("X:${x},Y:${y},D:${d}${f}")
     }
@@ -53,15 +44,15 @@ object playerPosition {
     }
 
     fun stepCounter (): String {
-        var playerY = y
-        var playerX = x
-        var initialY = 0
-        var initialX = 0
+        val playerY = y
+        val playerX = x
+        val initialY = 0
+        val initialX = 0
         if (playerY != initialY || playerX != initialX) {
-            counter++
+            counter = (counter + 1)
         }
         println(counter)
-        return "Steps: ${counter}"
+        return "Steps: $counter"
     }
 
 }
@@ -105,15 +96,12 @@ class mapCell(X: Int?, Y: Int?, F: Int) {
     }
 }
 
-fun buildLevel() :kotlin.Array<kotlin.Array<mapCell?>>{
-    val pX = 20
-    val pY = 20
-    val xyArray = Array(pX) { arrayOfNulls<mapCell?>(pY) }
+fun buildLevel(levelX: Int, levelY: Int, f: Int) :kotlin.Array<kotlin.Array<mapCell?>>{
+    val xyArray = Array(levelX) { arrayOfNulls<mapCell?>(levelY) }
     println("Loading level")
-
-    for (x in 0 until pX) {
-        for (y in 0 until pY) {
-            val cell = mapCell(x, y, 1)
+    for (x in 0 until levelX) {
+        for (y in 0 until levelY) {
+            val cell = mapCell(x, y, f)
             if (cell.FileCheck()) {
                 println("Loading level assets.")
                 xyArray[x][y] = cell
