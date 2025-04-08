@@ -1,27 +1,31 @@
 package io.github.ericjbyrd.partnershipproject
 import io.github.ericjbyrd.partnershipproject.PlayerPosition.counter
-import io.github.ericjbyrd.partnershipproject.PlayerPosition.f
 import io.github.ericjbyrd.partnershipproject.PlayerPosition.stepCounter
-import io.github.ericjbyrd.partnershipproject.PlayerPosition.x
 import io.github.ericjbyrd.partnershipproject.monsterRepository.goblin
-import net.miginfocom.layout.LinkHandler.X
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.awt.Color
 import javax.swing.BorderFactory
 import javax.swing.ImageIcon
 import javax.swing.JLabel
 import javax.swing.JLayeredPane
 import javax.swing.JPanel
-import kotlin.properties.Delegates
+import kotlinx.coroutines.*
+import java.awt.Transparency
 
 
 class MainGamePanel : JLayeredPane() {
-    val fourthLayerPanel = PlayerStatusPanel()
+    val player = playerCharacter(name = "Eric", health = 60, atkPoints = 50, defPoints = 40,
+    matkPoints = 30, mdefPoints =  10, mp = 50, maxMP = 50, maxHealth = 60)
+    val fifthLayerPanel = MonsterStatusPanel(goblin)
+    val fourthLayerPanel = PlayerStatusPanel(player)
     val thirdLayerPanel = JPanel()
     val secondLayerPanel = JPanel()
     val firstLayerPanel = JPanel()
     val worldView = JLabel()
     val buttonsPanel = ButtonPanel()
-    val playerStatsPanel = PlayerStatusPanel()
 
     init {
         val monsterLabel = JLabel()
@@ -38,9 +42,17 @@ class MainGamePanel : JLayeredPane() {
         add(buttonsPanel)
         buttonsPanel.setBounds(700, 400, 100, 67)
 
+//        //MonsterStatusPanel
+//        add(fifthLayerPanel)
+//        setLayer(fifthLayerPanel, 1, 0)
+//        fifthLayerPanel.setOpaque(true)
+//        fifthLayerPanel.setBackground(Color.BLACK)
+//        fifthLayerPanel.setBounds(550, 30, 150, 300)
+//        fifthLayerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5, true))
+
         //Player Stats Panel
         add(fourthLayerPanel)
-        setLayer(fourthLayerPanel, 0, 0)
+        setLayer(fourthLayerPanel, 1, 0)
         fourthLayerPanel.setOpaque(true)
         fourthLayerPanel.setBackground(Color.BLACK)
         fourthLayerPanel.setBounds(550, 30, 150, 300)
@@ -56,7 +68,7 @@ class MainGamePanel : JLayeredPane() {
         thirdLayerPanel.add(dialogueLabel)
 
 
-        //monsterLayer
+        //monsterLabelLayer
         add(monsterLabel, 0)
         monsterLabel.setIcon(ImageIcon(monsterImage))
         monsterLabel.setBounds(215, 160, 300, 300)
@@ -87,42 +99,53 @@ class MainGamePanel : JLayeredPane() {
         worldView.setIcon(ImageIcon(currentLevel[PlayerPosition.x][PlayerPosition.y]?.northImagePath))
 
         class Encounter{
+            private val uiScope = CoroutineScope(Dispatchers.Main)
+
             fun battleEngage(player: playerCharacter, monster: Monster){
-                secondLayerPanel.setOpaque(true)
-                secondLayerPanel.setBackground(SHADED)
-                println("En Garde! ${monster.name} has appeared!")
-                monsterLabel.setVisible(true)
-                monster.greet()
+                uiScope.launch {
+                    secondLayerPanel.setOpaque(true)
+                    secondLayerPanel.setBackground(SHADED)
+                    secondLayerPanel.setVisible(true)
+                    secondLayerPanel.repaint()
+                    buttonsPanel.isVisible = false
+                    dialogueLabel.setText(monster.greet())
+                    delay(100)
+                withContext(Dispatchers.Default){
+                monsterLabel.isVisible = true
                 var playerTurn = true
                 while (player.health > 0 && monster.health > 0) {
                     while (playerTurn){
                         val move = readln()
                         if (move.contentEquals("attack")){
-                            player.attack(monster)
-                            println("player attacks!")
-                            monster.health = (monster.health-1)
-                            println("monster took 1 damage")
+                            dialogueLabel.setText(player.attack(monster))
+                            monster.health = (monster.health-5)
+                            dialogueLabel.setText("${monster.name} took 5 damage")
                             playerTurn = false
                             }
                     }
-                    monster.attack(player)
+                    dialogueLabel.setText(monster.attack(player))
                     player.health = (player.health - 1)
-                    println("player took 5 damage")
+                    fourthLayerPanel.health.setText("Health: "+ player.health.toString())
+                    dialogueLabel.setText("${player.name} took 5 damage")
                     playerTurn = true
                 }
                 if (player.health == 0)
                 {
-                    println( "${player.name} has fallen")
+                    dialogueLabel.setText( "${player.name} has fallen")
                 }
                 else if(monster.health == 0)
                 {
-                    println("${monster.name} has been defeated!")
+                    dialogueLabel.setText("${monster.name} has been defeated!")
                     secondLayerPanel.setOpaque(false)
+                    secondLayerPanel.repaint()
+                    buttonsPanel.setVisible(true)
+                }
+                    }
                 }
 
             }
             fun triggerEncounter(){
-                if (counter == 1)
+                if (counter == 10)
                 {
                     Encounter().battleEngage(player, goblin)
                     counter = 0
@@ -150,8 +173,8 @@ class MainGamePanel : JLayeredPane() {
                     PlayerPosition.printPlayerCoords()
                     if (currentLevel[PlayerPosition.x][PlayerPosition.y+1] != null){
                         PlayerPosition.incrementY(0,currentLevelMaxY)
-                        updateHUD()
                         println(PlayerPosition.getPlayerCoords())
+                        updateHUD()
                         worldView.setIcon(ImageIcon(currentLevel[PlayerPosition.x][PlayerPosition.y]?.northImagePath))
                     }
                     else {

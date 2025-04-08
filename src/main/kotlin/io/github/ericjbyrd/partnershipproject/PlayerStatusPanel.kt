@@ -6,22 +6,36 @@ import net.miginfocom.swing.MigLayout
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-val player = playerCharacter(name = "Eric", health = 60, atkPoints = 50, defPoints = 40,
-matkPoints = 30, mdefPoints =  10, mp = 50, maxMP = 50, maxHealth = 60)
-class PlayerStatusPanel: JPanel(MigLayout("Wrap")) {
 
-    var health = JLabel("Health: "+ player.health.toString())
-    var mp = JLabel("MP: "+ player.mp.toString())
-    val playerName = player.name
+open class StatusPanel(character: Character): JPanel(MigLayout("Wrap")) {
+
+    open var health = JLabel("Health: "+ character.health.toString())
+    open var mp = JLabel("MP: "+ character.mp.toString())
+    open var name = JLabel(character.name)
+}
+
+class PlayerStatusPanel(player: Character) : StatusPanel(player) {
+    override var health = JLabel("Health: " + player.health.toString())
+    override var mp = JLabel("MP: " + player.mp.toString())
+    val playerName = JLabel(player.name)
     var playerCoord = JLabel(getPlayerCoords())
     var stepCounter = JLabel(stepCounter())
-    init{
-        add(JLabel(playerName))
+
+    init {
+        add(playerName)
         add(health)
         add(mp)
         add(playerCoord)
         add(stepCounter)
     }
-
-
+}
+class MonsterStatusPanel(monster: Monster): StatusPanel(monster) {
+        override var health = JLabel("Health: "+ monster.health.toString())
+        override var mp = JLabel("MP: "+ monster.mp.toString())
+        val monsterName = monster.name
+        init{
+            add(JLabel(monsterName))
+            add(health)
+            add(mp)
+        }
 }

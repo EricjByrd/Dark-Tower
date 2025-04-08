@@ -12,7 +12,7 @@ abstract class Character(open val name: String,
                          open val maxHealth: Int,
                          open var mp: Int,
                          open val maxMP: Int) {
-    abstract fun greet()
+    abstract fun greet(): String
 }
 
 open class Monster(override val name: String,
@@ -24,8 +24,8 @@ open class Monster(override val name: String,
                    open val defPoints: Int,
                    open val matkPoints: Int,
                    open val mdefPoints: Int) : Character(name, health, mp, x, y), normCombatant {
-    override fun greet() {
-        println("$name has approached!")
+    override fun greet(): String{
+        return "En Garde! ${name} has approached!"
     }
 
     override fun attack(character: playerCharacter): String {
@@ -49,8 +49,8 @@ class Boss(override val name: String,
            override val matkPoints: Int,
            override val mdefPoints: Int): Monster(
     name,health,atkPoints,defPoints,matkPoints,mdefPoints, mp,matkPoints, mdefPoints), specialCombatant {
-    final override fun greet() {
-        println("You have encountered $name!")
+    final override fun greet(): String{
+        return ("You have encountered $name!")
     }
     override fun attack(character: playerCharacter): String {
         return ("$name attacks ferociously!")
@@ -81,8 +81,8 @@ class playerCharacter(override val name: String,
                       val matkPoints: Int,
                       val mdefPoints: Int): Character(name,health,maxHealth,mp, maxMP) {
 
-    override fun greet(){
-        println("")
+    override fun greet(): String{
+        return "{$name} draws their weapon!"
     }
     fun attack(monster: Monster): String {
         return("$name attacks!")
