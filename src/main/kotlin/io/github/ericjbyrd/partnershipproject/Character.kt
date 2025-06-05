@@ -2,7 +2,9 @@ package io.github.ericjbyrd.partnershipproject
 
 import io.github.ericjbyrd.partnershipproject.PlayerPosition.x
 import io.github.ericjbyrd.partnershipproject.PlayerPosition.y
+import java.awt.Image
 import java.sql.DriverManager.println
+import javax.swing.ImageIcon
 
 //open means, open to interpretation and does not require an initialized value on override.
 //abstract means, open to interpretation but requires an initialized value on override.
@@ -48,7 +50,7 @@ class Boss(override val name: String,
            override val defPoints: Int,
            override val matkPoints: Int,
            override val mdefPoints: Int): Monster(
-    name,health,atkPoints,defPoints,matkPoints,mdefPoints, mp,matkPoints, mdefPoints), specialCombatant {
+    name, health,atkPoints,defPoints,matkPoints,mdefPoints, mp,matkPoints, mdefPoints), specialCombatant {
     final override fun greet(): String{
         return ("You have encountered $name!")
     }
@@ -113,6 +115,11 @@ object monsterRepository{
     //example of function -> If ((user x = 2) && (user y =2))
     //          {encounter with monster inRange of monsterList indices}
 }
+
+//object monsterIconRepository{
+//    val monsterIcons = listOf<ImageIcon>()
+//  idea here is to store monsterIcons in memory
+//}
 
 interface normCombatant{
     fun attack(character: playerCharacter): String

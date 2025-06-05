@@ -26,6 +26,7 @@ class MainGamePanel : JLayeredPane() {
     val firstLayerPanel = JPanel()
     val worldView = JLabel()
     val buttonsPanel = ButtonPanel()
+    val actionButtonPanel = BattleButtonPanel()
 
     init {
         val monsterLabel = JLabel()
@@ -40,15 +41,19 @@ class MainGamePanel : JLayeredPane() {
 
         //adding button panel to the JLayered Pane
         add(buttonsPanel)
+        add(actionButtonPanel)
         buttonsPanel.setBounds(700, 400, 100, 67)
+        actionButtonPanel.setBounds(700, 400, 100, 67)
+        actionButtonPanel.isVisible= false
 
-//        //MonsterStatusPanel
-//        add(fifthLayerPanel)
-//        setLayer(fifthLayerPanel, 1, 0)
-//        fifthLayerPanel.setOpaque(true)
-//        fifthLayerPanel.setBackground(Color.BLACK)
-//        fifthLayerPanel.setBounds(550, 30, 150, 300)
-//        fifthLayerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5, true))
+        //MonsterStatusPanel
+        add(fifthLayerPanel)
+        setLayer(fifthLayerPanel, 1, 0)
+        fifthLayerPanel.setOpaque(true)
+        fifthLayerPanel.setBackground(Color.BLACK)
+        fifthLayerPanel.setBounds(0, 30, 150, 150)
+        fifthLayerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5, true))
+        fifthLayerPanel.isVisible = false
 
         //Player Stats Panel
         add(fourthLayerPanel)
@@ -98,6 +103,12 @@ class MainGamePanel : JLayeredPane() {
         val currentLevelMaxY = currentLevel[0].size-1
         worldView.setIcon(ImageIcon(currentLevel[PlayerPosition.x][PlayerPosition.y]?.northImagePath))
 
+        class DialogueControl(){
+            fun setDialogue(string: String){
+                dialogueLabel.setText(string)
+            }
+        }
+
         class Encounter{
             private val uiScope = CoroutineScope(Dispatchers.Main)
 
@@ -107,11 +118,14 @@ class MainGamePanel : JLayeredPane() {
                     secondLayerPanel.setBackground(SHADED)
                     secondLayerPanel.setVisible(true)
                     secondLayerPanel.repaint()
-                    buttonsPanel.isVisible = false
+                    fifthLayerPanel.isVisible = true
+                    buttonsPanel.setVisible(false)
+                    actionButtonPanel.setVisible(true)
                     dialogueLabel.setText(monster.greet())
                     delay(100)
                 withContext(Dispatchers.Default){
-                monsterLabel.isVisible = true
+                monsterLabel.setVisible(true)
+                monsterLabel.setBackground(Color.RED)
                 var playerTurn = true
                 while (player.health > 0 && monster.health > 0) {
                     while (playerTurn){
@@ -178,7 +192,7 @@ class MainGamePanel : JLayeredPane() {
                         worldView.setIcon(ImageIcon(currentLevel[PlayerPosition.x][PlayerPosition.y]?.northImagePath))
                     }
                     else {
-                        println("Ouch!")
+
                     }
                 }
 
