@@ -36,7 +36,7 @@ class Main : JPanel(MigLayout("ins 4, fill")) {
                     override fun mouseEntered(e: MouseEvent?) {
                         val button = e?.component as GameMenu.GameMenuButton?
                         //because component doesn't know we're working with buttons
-                        //Mouse event is null so JButton should be null as well
+                        //MouseEvent is null so JButton should be null as well
                         if (button != null) {
                             descriptionPanel.descriptionLabel.text = button.description
                             //left side of = the receiver
