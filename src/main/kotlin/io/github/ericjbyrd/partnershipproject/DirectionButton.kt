@@ -29,22 +29,22 @@ class ButtonPanel: JPanel(MigLayout()){
 
 class BattleButtonPanel: JPanel(MigLayout()){
 
-    class actionButton(
+    class ActionButton(
         text: String
     ) : JButton(text) {
         init {
             font = font.deriveFont(Font.BOLD, 20F)
         }
     }
-    val attackButton = actionButton("Attack")
-    val defendButton = actionButton("Defend")
-    val magicatkButton = actionButton("Magic")
-    val specialatkButton = actionButton("Special")
+    val attackButton = ActionButton("Attack")
+    val defendButton = ActionButton("Defend")
+    val magicatkButton = ActionButton("Magic")
+    val specialatkButton = ActionButton("Special")
     init{
 
         add(attackButton,"dock north, wrap")
-        add(defendButton,"dock west, wrap")
-        add(magicatkButton, "dock east, wrap")
-        add(specialatkButton, "dock south, wrap")
+        add(defendButton,"dock north, wrap")
+        add(magicatkButton, "dock north, wrap")
+        add(specialatkButton, "dock north, wrap")
     }
 }

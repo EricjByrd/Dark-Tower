@@ -13,7 +13,13 @@ import javax.swing.JLabel
 import javax.swing.JLayeredPane
 import javax.swing.JPanel
 import kotlinx.coroutines.*
+import java.awt.KeyEventDispatcher
 import java.awt.Transparency
+import java.awt.event.ActionListener
+import java.awt.event.KeyEvent
+import javax.swing.Action
+import javax.swing.JButton
+import kotlin.coroutines.resume
 
 
 class MainGamePanel : JLayeredPane() {
@@ -27,6 +33,8 @@ class MainGamePanel : JLayeredPane() {
     val worldView = JLabel()
     val buttonsPanel = ButtonPanel()
     val actionButtonPanel = BattleButtonPanel()
+    var battleMode: Boolean = false
+    var playerTurn: Boolean = false
 
     init {
         val monsterLabel = JLabel()
@@ -42,8 +50,8 @@ class MainGamePanel : JLayeredPane() {
         //adding button panel to the JLayered Pane
         add(buttonsPanel)
         add(actionButtonPanel)
-        buttonsPanel.setBounds(700, 400, 100, 67)
-        actionButtonPanel.setBounds(700, 400, 100, 67)
+        buttonsPanel.setBounds(700, 400, 200, 200)
+        actionButtonPanel.setBounds(700, 400, 200, 200)
         actionButtonPanel.isVisible= false
 
         //MonsterStatusPanel
@@ -109,57 +117,103 @@ class MainGamePanel : JLayeredPane() {
             }
         }
 
+        class ButtonAccess {
+            fun toggleActionButtons(panel: JPanel, status: Boolean) {
+                for (button in actionButtonPanel.components) {
+                    if (button is JButton) {
+                        button.isEnabled = status
+                    }
+                }
+
+            }
+        }
+
         class Encounter{
+            //suspend function that takes a JButton and returns a String with suspendCancellableCoroutine
+            suspend fun awaitAction(button: JButton): String = suspendCancellableCoroutine {
+                cont ->
+                lateinit var listener: ActionListener
+                listener = ActionListener { e ->
+                    cont.resume(e.actionCommand)
+                    button.removeActionListener(listener)
+                }
+                button.addActionListener(listener)
+                cont.invokeOnCancellation{
+                    button.removeActionListener(listener)
+                }
+            }
+
             private val uiScope = CoroutineScope(Dispatchers.Main)
 
             fun battleEngage(player: playerCharacter, monster: Monster){
+                battleMode = true
                 uiScope.launch {
                     secondLayerPanel.setOpaque(true)
                     secondLayerPanel.setBackground(SHADED)
-                    secondLayerPanel.setVisible(true)
+                    secondLayerPanel.isVisible = true
                     secondLayerPanel.repaint()
                     fifthLayerPanel.isVisible = true
-                    buttonsPanel.setVisible(false)
-                    actionButtonPanel.setVisible(true)
+                    buttonsPanel.isVisible = false
+                    actionButtonPanel.isVisible = true
                     dialogueLabel.setText(monster.greet())
-                    delay(100)
-                withContext(Dispatchers.Default){
-                monsterLabel.setVisible(true)
-                monsterLabel.setBackground(Color.RED)
-                var playerTurn = true
-                while (player.health > 0 && monster.health > 0) {
-                    while (playerTurn){
-                        val move = readln()
-                        if (move.contentEquals("attack")){
-                            dialogueLabel.setText(player.attack(monster))
-                            monster.health = (monster.health-5)
-                            dialogueLabel.setText("${monster.name} took 5 damage")
-                            playerTurn = false
-                            }
+                    actionButtonPanel.attackButton.addActionListener{
+                        dialogueLabel.setText(player.attack(monster))
+                        monster.health = (monster.health-4)
+                        fifthLayerPanel.health.setText("Health: "+ monster.health.toString())
+                        dialogueLabel.setText("${monster.name} took 5 damage")
+                        playerTurn = false
                     }
+                ButtonAccess().toggleActionButtons(actionButtonPanel,false)
+                withContext(Dispatchers.Default){
+                monsterLabel.isVisible = true
+                monsterLabel.setBackground(Color.RED)
+                var x = 0
+                delay(1000)
+                while (monster.health >= 0) {
+                    dialogueLabel.setText("${player.name}'s turn")
+                    playerTurn = true
+                    ButtonAccess().toggleActionButtons(actionButtonPanel,true)
+                    awaitAction(actionButtonPanel.attackButton)
+                    ButtonAccess().toggleActionButtons(actionButtonPanel,false)
+                    delay(1000)
                     dialogueLabel.setText(monster.attack(player))
+                    if (monster.health > 0) {
                     player.health = (player.health - 1)
                     fourthLayerPanel.health.setText("Health: "+ player.health.toString())
                     dialogueLabel.setText("${player.name} took 5 damage")
-                    playerTurn = true
+                    delay(1000)
+                    println(x)
+                    x = x + 1
+                        dialogueLabel.setText("$player.name's turn")
+                    }
+                    else{
+                        break
+                    }
                 }
-                if (player.health == 0)
+                if (player.health <= 0)
                 {
                     dialogueLabel.setText( "${player.name} has fallen")
                 }
-                else if(monster.health == 0)
+                if(monster.health <= 0)
                 {
                     dialogueLabel.setText("${monster.name} has been defeated!")
                     secondLayerPanel.setOpaque(false)
                     secondLayerPanel.repaint()
+                    monsterLabel.setVisible(false)
                     buttonsPanel.setVisible(true)
+                    battleMode = false
+                    delay(2000)
+                    dialogueLabel.setText("")
+                    fifthLayerPanel.isVisible = false
+                    monster.health = monster.maxHealth
+                    fifthLayerPanel.health.setText("Health: "+ monster.health.toString())
                 }
                     }
                 }
 
             }
             fun triggerEncounter(){
-                if (counter == 10)
+                if (counter ==5)
                 {
                     Encounter().battleEngage(player, goblin)
                     counter = 0
@@ -167,8 +221,6 @@ class MainGamePanel : JLayeredPane() {
                 }
             }
         }
-
-
 
 
         fun updateHUD() {
@@ -179,8 +231,7 @@ class MainGamePanel : JLayeredPane() {
             fourthLayerPanel.health.setText("Health: "+ player.health.toString())
 
         }
-
-
+        
         forward.addActionListener {
             when (PlayerPosition.d) {
                 PlayerPosition.Direction.N -> {
@@ -236,6 +287,7 @@ class MainGamePanel : JLayeredPane() {
                 }
             }
         }
+
         backwards.addActionListener{
             when (PlayerPosition.d) {
                 PlayerPosition.Direction.N -> {

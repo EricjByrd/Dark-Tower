@@ -31,8 +31,8 @@ open class Monster(override val name: String,
     }
 
     override fun attack(character: playerCharacter): String {
-        return "${name} attacks!"
         character.health = character.health - 1
+        return "${name} attacks!"
     }
 
     override fun magAttack(character: playerCharacter): String {
